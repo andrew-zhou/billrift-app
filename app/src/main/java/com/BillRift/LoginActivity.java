@@ -4,29 +4,10 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
 public class LoginActivity extends FragmentActivity implements LoginFragment.Listener {
-
-    private LoginFragment fragment;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
+        setContentView(R.layout.activity_login);
     }
 
     @Override
