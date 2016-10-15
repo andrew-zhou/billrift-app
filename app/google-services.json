@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "266157066684",
+    "project_id": "firebase-billrift"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:266157066684:android:329e1272ce61a208",
+        "android_client_info": {
+          "package_name": "com.BillRift"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "266157066684-5ihoooj2i0hiij6s8iiar7h110r6onus.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.BillRift",
+            "certificate_hash": "C1D76E4E6A74A4AB763CF5C7D742C342C77ABB37"
+          }
+        },
+        {
+          "client_id": "266157066684-vqh1ejhbkk1q943htenuffaraflro1ma.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAu0vA7QMTiFW7IVNRWQS_7EtS2QUxcfA8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

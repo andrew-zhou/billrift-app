@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">BillRift</string>
+    <string name="login">Login to BillRift</string>
 </resources>

@@ -7,4 +7,9 @@ public class LoginPresenter extends BasePresenter<Object, LoginView> {
     protected void updateView() {
 
     }
+
+    public void onLoginButtonClicked() {
+        // TODO: Do OAuth
+        view().finishLogin();
+    }
 }

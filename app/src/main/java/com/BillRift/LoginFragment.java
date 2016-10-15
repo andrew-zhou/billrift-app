@@ -9,15 +9,24 @@ import android.view.ViewGroup;
 
 import com.BillRift.presenters.LoginPresenter;
 import com.BillRift.views.LoginView;
+import com.google.android.gms.common.SignInButton;
 
 public class LoginFragment extends MvpFragment<LoginPresenter> implements LoginView {
 
     private Listener listener;
+    private SignInButton signInButton;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
+        signInButton = (SignInButton)view.findViewById(R.id.signInButton);
+        signInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.onLoginButtonClicked();
+            }
+        });
         return view;
     }
 
@@ -36,6 +45,13 @@ public class LoginFragment extends MvpFragment<LoginPresenter> implements LoginV
     @Override
     protected LoginPresenter createPresenter() {
         return new LoginPresenter();
+    }
+
+    @Override
+    public void finishLogin() {
+        if(listener != null) {
+            listener.goToGroupsActivity();
+        }
     }
 
     public interface Listener {
