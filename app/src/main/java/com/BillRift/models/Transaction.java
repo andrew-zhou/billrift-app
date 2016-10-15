@@ -5,4 +5,5 @@ package com.BillRift.models;
  */
 
 public class Transaction {
+    // TODO: @SerializedName
 }

@@ -5,6 +5,7 @@ package com.BillRift.models;
  */
 
 public class User {
+    // TODO: @SerializedName
     private String displayName;
     private String email;
     private String id;
