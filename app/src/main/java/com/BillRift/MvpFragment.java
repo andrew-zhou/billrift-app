@@ -12,13 +12,24 @@ public abstract class MvpFragment<P extends BasePresenter> extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        presenter = createPresenter();
+        if (savedInstanceState == null) {
+            presenter = createPresenter();
+        } else {
+            PresenterManager.getInstance().restorePresenter(savedInstanceState);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         presenter.bindView(this);
     }
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
+        super.onPause();
+        Bundle bundle = new Bundle();
+        PresenterManager.getInstance().savePresenter(presenter, bundle);
         presenter.unbindView();
     }
 
