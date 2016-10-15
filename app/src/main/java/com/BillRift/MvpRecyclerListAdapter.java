@@ -1,6 +1,7 @@
 package com.BillRift;
 
-import com.remind101.archexample.presenters.BasePresenter;
+
+import com.BillRift.presenters.BasePresenter;
 
 import java.util.ArrayList;
 import java.util.Collection;

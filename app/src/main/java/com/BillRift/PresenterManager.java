@@ -2,9 +2,9 @@ package com.BillRift;
 
 import android.os.Bundle;
 
+import com.BillRift.presenters.BasePresenter;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import com.remind101.archexample.presenters.BasePresenter;
 
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;

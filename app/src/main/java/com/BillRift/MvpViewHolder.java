@@ -3,7 +3,8 @@ package com.BillRift;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.remind101.archexample.presenters.BasePresenter;
+import com.BillRift.presenters.BasePresenter;
+
 
 public abstract class MvpViewHolder<P extends BasePresenter> extends RecyclerView.ViewHolder {
     protected P presenter;

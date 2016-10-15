@@ -3,7 +3,7 @@ package com.BillRift;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 
-import com.remind101.archexample.presenters.BasePresenter;
+import com.BillRift.presenters.BasePresenter;
 
 import java.util.HashMap;
 import java.util.Map;
