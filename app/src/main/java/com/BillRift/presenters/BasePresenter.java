@@ -1,4 +1,4 @@
-package com.remind101.archexample.presenters;
+package com.BillRift.presenters;
 
 import android.support.annotation.NonNull;
 

@@ -1,4 +1,4 @@
-package com.remind101.archexample;
+package com.BillRift;
 
 import com.remind101.archexample.presenters.BasePresenter;
 

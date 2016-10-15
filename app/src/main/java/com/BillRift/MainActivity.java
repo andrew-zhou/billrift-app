@@ -1,3 +1,39 @@
+package com.BillRift;
+
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+//        presenter.bindView(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+//        presenter.unbindView();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+//        PresenterManager.getInstance().savePresenter(presenter, outState);
+    }
+}
+
+
+/*
 package com.remind101.archexample;
 
 import android.os.Bundle;
@@ -100,3 +136,5 @@ public class MainActivity extends AppCompatActivity implements MainView {
         animator.setDisplayedChild(POSITION_EMPTY);
     }
 }
+
+ */
