@@ -4,8 +4,6 @@ package com.BillRift.models;
  * Created by Zal on 2016-10-15.
  */
 
-import com.google.gson.annotations.SerializedName;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,6 +12,7 @@ public class Group {
     public int id;
     private String name;
     private Set<String> userIds;
+    private double balance;
 
     public Group(String name) {
         this.name = name;
@@ -46,5 +45,13 @@ public class Group {
 
     public void removeUserId(String userId) {
         userIds.remove(userId);
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
     }
 }
