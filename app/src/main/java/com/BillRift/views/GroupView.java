@@ -1,9 +1,13 @@
 package com.BillRift.views;
 
+import com.BillRift.models.Group;
+
 /**
  * Created by Dweep on 2016-10-15.
  */
 
-public class GroupView {
+public interface GroupView {
+    void setGroupName(String name);
 
+    void goToTransactionView(Group group);
 }
