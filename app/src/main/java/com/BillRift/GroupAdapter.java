@@ -15,7 +15,7 @@ import com.BillRift.views.GroupViewHolder;
 public class GroupAdapter extends MvpRecyclerListAdapter<Group, GroupPresenter, GroupViewHolder> {
     @Override
     public GroupViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new GroupViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout., parent, false));
+        return new GroupViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.group_row, parent, false));
     }
 
     @NonNull
