@@ -3,4 +3,7 @@
     <string name="login">Login to BillRift</string>
     <string name="loading">Loading...</string>
     <string name="empty_grouplist">You don\'t have groups yet :(</string>
+    <string name="add_transaction">Add Transaction</string>
+    <string name="see_balances">See Balances</string>
+    <string name="empty">No Transactions :(</string>
 </resources>

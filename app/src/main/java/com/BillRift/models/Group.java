@@ -9,7 +9,7 @@ import java.util.Set;
 
 public class Group {
     // TODO: @SerializedName
-    public int id;
+    public Integer id;
     private String name;
     private Set<String> userIds;
     private double balance;

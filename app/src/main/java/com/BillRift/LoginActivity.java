@@ -3,7 +3,6 @@ package com.BillRift;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 
 public class LoginActivity extends FragmentActivity implements LoginFragment.Listener {
     @Override
@@ -15,10 +14,12 @@ public class LoginActivity extends FragmentActivity implements LoginFragment.Lis
     @Override
     public void goToGroupsActivity() {
         // TODO
-        Log.d("BillRift DEBUGGING", "Login Button Clicked");
 
         Intent groupListIntent = new Intent(this, GroupListActivity.class);
         startActivity(groupListIntent);
+
+//        Intent intent = TransactionListActivity.makeIntent(this, 1);
+//        startActivity(intent);
     }
 }
 

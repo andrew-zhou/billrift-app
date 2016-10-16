@@ -7,8 +7,26 @@ package com.BillRift.models;
 public class Transaction {
     private String from;
     private String to;
-    private double amount;
+    private Double amount;
     private String title;
+    private Integer id;
+    private Integer groupId;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(Integer groupId) {
+        this.groupId = groupId;
+    }
 
     public String getFrom() {
         return from;
