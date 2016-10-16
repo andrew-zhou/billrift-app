@@ -43,9 +43,15 @@ public class GroupListPresenter extends BasePresenter<List<Group>, GroupListView
 //        setModel(GroupDatabase.getInstance())
         List<Group> mockData = new ArrayList<>();
         // TODO: load actual data from db
-        mockData.add(new Group("Vacation"));
-        mockData.add(new Group("House"));
-        mockData.add(new Group("Architecture sucks dick"));
+        Group vacation = new Group("Vacation");
+        Group house = new Group("House");
+        Group architecture = new Group("Architecture is gay");
+        GroupDatabase.getInstance().saveGroup(vacation);
+        GroupDatabase.getInstance().saveGroup(house);
+        GroupDatabase.getInstance().saveGroup(architecture);
+        mockData.add(vacation);
+        mockData.add(house);
+        mockData.add(architecture);
 
         setModel(mockData);
     }
