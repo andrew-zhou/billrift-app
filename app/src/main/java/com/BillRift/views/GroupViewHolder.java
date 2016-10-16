@@ -1,6 +1,7 @@
 package com.BillRift.views;
 
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,8 +17,6 @@ import com.BillRift.presenters.GroupPresenter;
 
 public class GroupViewHolder extends MvpViewHolder<GroupPresenter> implements GroupView {
     private final TextView groupName;
-    @Nullable
-    private OnGroupClickListener listener;
 
     public GroupViewHolder(View itemView) {
         super(itemView);
@@ -31,23 +30,8 @@ public class GroupViewHolder extends MvpViewHolder<GroupPresenter> implements Gr
         });
     }
 
-    public void setListener(@Nullable OnGroupClickListener listener) {
-        this.listener = listener;
-    }
-
     @Override
     public void setGroupName(String name) {
         groupName.setText(name);
-    }
-
-    @Override
-    public void goToTransactionView(Group group) {
-        if (listener != null) {
-            listener.onGroupClick(group);
-        }
-    }
-
-    public interface OnGroupClickListener {
-        void onGroupClick(Group group);
     }
 }

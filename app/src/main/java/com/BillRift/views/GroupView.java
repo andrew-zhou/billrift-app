@@ -8,6 +8,4 @@ import com.BillRift.models.Group;
 
 public interface GroupView {
     void setGroupName(String name);
-
-    void goToTransactionView(Group group);
 }
