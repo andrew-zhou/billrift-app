@@ -1,5 +1,5 @@
-# BillRift Server
-The back-end of the BillRift app
+# BillRift App
+The BillRift Android app
 ### Models
 Group:
   - id: 
