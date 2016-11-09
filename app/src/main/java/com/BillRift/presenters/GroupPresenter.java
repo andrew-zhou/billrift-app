@@ -14,6 +14,7 @@ public class GroupPresenter extends BasePresenter<Group, GroupView> {
     @Override
     protected void updateView() {
         view().setGroupName(model.getName());
+        view().setPersonalBalance(model.getBalance());
     }
 
     public void onGroupClicked() {

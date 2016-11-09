@@ -8,4 +8,5 @@ import com.BillRift.models.Group;
 
 public interface GroupView {
     void setGroupName(String name);
+    void setPersonalBalance(double balance);
 }

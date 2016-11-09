@@ -12,7 +12,7 @@ public class Group {
     public Integer id;
     private String name;
     private Set<String> userIds;
-    private double balance;
+    private double balance = 0.0;
 
     public Group(String name) {
         this.name = name;

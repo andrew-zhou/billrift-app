@@ -17,10 +17,12 @@ import com.BillRift.presenters.GroupPresenter;
 
 public class GroupViewHolder extends MvpViewHolder<GroupPresenter> implements GroupView {
     private final TextView groupName;
+    private final TextView personalBalance;
 
     public GroupViewHolder(View itemView) {
         super(itemView);
         groupName = (TextView) itemView.findViewById(R.id.group_name);
+        personalBalance = (TextView) itemView.findViewById(R.id.personal_balance);
 
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -33,5 +35,10 @@ public class GroupViewHolder extends MvpViewHolder<GroupPresenter> implements Gr
     @Override
     public void setGroupName(String name) {
         groupName.setText(name);
+    }
+
+    @Override
+    public void setPersonalBalance(double balance) {
+        personalBalance.setText(String.valueOf(balance));
     }
 }
