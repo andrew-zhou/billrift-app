@@ -1,9 +1,10 @@
-package com.BillRift;
+package com.BillRift.databases;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.BillRift.models.Group;
+import com.BillRift.security.CryptManager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,8 +16,9 @@ import java.util.Map;
 public class GroupDatabase {
     private static GroupDatabase instance;
 
-    private final Map<Integer, Group> groups;
+    private final Map<Integer, String> groups;
 
+    // TODO: Remove once we stop mocking data
     private int nextId = 1;
 
     private GroupDatabase() {
@@ -32,15 +34,16 @@ public class GroupDatabase {
 
     @Nullable public Group getGroup(int id) {
         synchronized (groups) {
-            return groups.get(id);
+            return (Group) CryptManager.decryptString(groups.get(id), "mocktoken" /* TODO: Get token here */ );
         }
     }
 
     public void saveGroup(@NonNull Group group) {
         synchronized (groups) {
+            // TODO: Remove once we stop mocking data
             int id = nextId++;
             group.setId(id);
-            groups.put(id, group);
+            groups.put(id, CryptManager.encryptObject(group, "mocktoken" /* TODO: Get token here */ ));
         }
     }
 }

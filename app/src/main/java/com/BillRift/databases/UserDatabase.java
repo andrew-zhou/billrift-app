@@ -1,9 +1,10 @@
-package com.BillRift;
+package com.BillRift.databases;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.BillRift.models.User;
+import com.BillRift.security.CryptManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,7 +19,7 @@ import java.util.Set;
 public class UserDatabase {
     private static UserDatabase instance;
 
-    private final Map<String, User> users;
+    private final Map<String, String> users;
 
     private UserDatabase() {
         users = new HashMap<>();
@@ -33,13 +34,13 @@ public class UserDatabase {
 
     @Nullable public User getUser(String id) {
         synchronized (users) {
-            return users.get(id);
+            return (User) CryptManager.decryptString(users.get(id), "mocktoken" /* TODO: Get token here */ );
         }
     }
 
     public void saveUser(@NonNull User user) {
         synchronized (users) {
-            users.put(user.getId(), user);
+            users.put(user.getId(), CryptManager.encryptObject(user, "mocktoken" /* TODO: Get token here */ ));
         }
     }
 
@@ -56,7 +57,7 @@ public class UserDatabase {
 //            Set<String> ids = GroupDatabase.getInstance().getGroup(groupId).getUserIds();
 //            ArrayList<User> u = new ArrayList<>();
 //            for(String id : ids) {
-//                u.add(users.get(id));
+//                u.add(getUser(id));
 //            }
 //            return u;
 //        }

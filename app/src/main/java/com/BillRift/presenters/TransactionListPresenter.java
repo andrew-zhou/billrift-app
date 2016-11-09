@@ -1,6 +1,6 @@
 package com.BillRift.presenters;
 
-import com.BillRift.TransactionDatabase;
+import com.BillRift.databases.TransactionDatabase;
 import com.BillRift.models.Transaction;
 import com.BillRift.views.TransactionListView;
 

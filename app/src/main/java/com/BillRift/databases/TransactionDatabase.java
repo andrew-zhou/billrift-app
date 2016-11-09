@@ -1,8 +1,9 @@
-package com.BillRift;
+package com.BillRift.databases;
 
 import android.support.annotation.NonNull;
 
 import com.BillRift.models.Transaction;
+import com.BillRift.security.CryptManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,7 +16,7 @@ import java.util.Map;
 
 public class TransactionDatabase {
     private static TransactionDatabase instance;
-    private final Map<Integer, Transaction> transactions;
+    private final Map<Integer, String> transactions;
 
     private TransactionDatabase() {
         transactions = new HashMap<>();
@@ -30,13 +31,13 @@ public class TransactionDatabase {
 
     public void saveTransaction(@NonNull Transaction transaction) {
         synchronized (transactions) {
-            transactions.put(transaction.getId(), transaction);
+            transactions.put(transaction.getId(), CryptManager.encryptObject(transaction, "mocktoken" /* TODO: Get token here */ ));
         }
     }
 
     public Transaction getTransaction(Integer id) {
         synchronized (transactions) {
-            return transactions.get(id);
+            return (Transaction) CryptManager.decryptString(transactions.get(id), "mocktoken" /* TODO: Get token here */ );
         }
     }
 
@@ -56,7 +57,8 @@ public class TransactionDatabase {
         // TODO: Do not mock data and uncomment this section
 //        synchronized (transactions) {
 //            ArrayList<Transaction> transactionList = new ArrayList<>();
-//            for (Transaction transaction : transactions.values()) {
+//            for (String transactionString : transactions.values()) {
+//                Transaction transaction = (Transaction) CryptManager.decryptString(transactionString, "mocktoken" /* TODO: Get token here */ );
 //                if (transaction.getGroupId() == groupId) {
 //                    transactionList.add(transaction);
 //                }

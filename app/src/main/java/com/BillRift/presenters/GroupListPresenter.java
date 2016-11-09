@@ -2,7 +2,7 @@ package com.BillRift.presenters;
 
 import android.support.annotation.NonNull;
 
-import com.BillRift.GroupDatabase;
+import com.BillRift.databases.GroupDatabase;
 import com.BillRift.models.Group;
 import com.BillRift.views.GroupListView;
 

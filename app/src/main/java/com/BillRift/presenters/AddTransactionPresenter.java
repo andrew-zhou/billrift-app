@@ -1,14 +1,10 @@
 package com.BillRift.presenters;
 
-import com.BillRift.TransactionDatabase;
 import com.BillRift.models.Transaction;
 import com.BillRift.views.AddTransactionView;
-import com.BillRift.UserDatabase;
+import com.BillRift.databases.UserDatabase;
 import com.BillRift.models.User;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
