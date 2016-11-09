@@ -21,16 +21,42 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Transaction With:"
+                android:text="From:"
                 />
 
             <Spinner
-                android:id="@+id/person_dropdown"
+                android:id="@+id/from_dropdown"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="32dp"
                 android:paddingRight="32dp"
                 />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="To:"
+                />
+
+            <Spinner
+                android:id="@+id/to_dropdown"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="32dp"
+                android:paddingRight="32dp"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Description:"/>
+
+            <EditText
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="32dp"
+                android:paddingRight="32dp" />
 
             <TextView
                 android:layout_width="match_parent"

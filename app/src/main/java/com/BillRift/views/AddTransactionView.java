@@ -12,7 +12,10 @@ public interface AddTransactionView {
     void showLoading();
     void showView(List<String> names);
     void setAmount(String amount);
-    void setSelectedName(String selectedName);
+    void setSelectedFrom(String selectedName);
+    void setDescription(String amount);
+    void setSelectedTo(String selectedName);
     void onSubmit();
     void onScan();
+    void showError();
 }

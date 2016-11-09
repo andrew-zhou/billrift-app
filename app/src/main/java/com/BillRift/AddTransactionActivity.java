@@ -62,12 +62,7 @@ public class AddTransactionActivity extends FragmentActivity implements AddTrans
         intent.putExtra(SegmentScanActivity.EXTRAS_LICENSE_KEY, "RE737XBD-ATCTQ4RK-IIONOM33-3GGUK4TK-7WQFY2X5-UBOGV7NA-LRVP2AFI-KAIWDWMP");
         BlinkOCREngineOptions options = new BlinkOCREngineOptions();
         options.addAllDigitsToWhitelist(OcrFont.OCR_FONT_ANY);
-//        options.addLowercaseCharsToWhitelist(OcrFont.OCR_FONT_ANY);
-//        options.addUppercaseCharsToWhitelist(OcrFont.OCR_FONT_ANY);
-        options.addCharToWhitelist('$', OcrFont.OCR_FONT_ANY);
         options.addCharToWhitelist('.', OcrFont.OCR_FONT_ANY);
-        options.addCharToWhitelist('-', OcrFont.OCR_FONT_ANY);
-        options.addCharToWhitelist('%', OcrFont.OCR_FONT_ANY);
         options.setMinimumLineHeight(10);
         options.setMaximumLineHeight(50);
         options.setMaximumCharsExpected(3000);
@@ -87,7 +82,8 @@ public class AddTransactionActivity extends FragmentActivity implements AddTrans
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == RECEIPT_REQUEST_CODE) {
-
+            String content = data.getBundleExtra(SegmentScanActivity.EXTRAS_SCAN_RESULTS).getString(NAME_RECEIPT);
+            fragment.handleScanResults(content);
         }
     }
 }
