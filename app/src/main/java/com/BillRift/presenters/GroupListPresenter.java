@@ -44,8 +44,11 @@ public class GroupListPresenter extends BasePresenter<List<Group>, GroupListView
         List<Group> mockData = new ArrayList<>();
         // TODO: load actual data from db
         Group vacation = new Group("Vacation");
-        Group house = new Group("House");
-        Group architecture = new Group("Architecture is gay");
+        vacation.setBalance(10.00);
+        Group house = new Group("House Expenses");
+        house.setBalance(0.0);
+        Group architecture = new Group("Architecture Party");
+        architecture.setBalance(-10.00);
         GroupDatabase.getInstance().saveGroup(vacation);
         GroupDatabase.getInstance().saveGroup(house);
         GroupDatabase.getInstance().saveGroup(architecture);
@@ -57,6 +60,7 @@ public class GroupListPresenter extends BasePresenter<List<Group>, GroupListView
     }
 
     public void onAddGroupClicked() {
+        // TODO: Change to add appropriate group
         Group group = new Group("Hello");
 
         // Update view immediately
