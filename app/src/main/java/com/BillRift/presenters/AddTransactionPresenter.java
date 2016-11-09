@@ -85,11 +85,22 @@ public class AddTransactionPresenter extends BasePresenter<List<User>, AddTransa
             return;
         }
 
+        // For now: just figure out which user they picked based from name
+        String fromId = null, toId = null;
+        for (User u : model) {
+            if (u.getDisplayName().equals(selectedFrom)) {
+                fromId = u.getId();
+            }
+            if (u.getDisplayName().equals(selectedTo)) {
+                toId = u.getId();
+            }
+        }
+
         try {
             double amnt = Double.parseDouble(amount);
             transaction.setAmount(amnt);
-            transaction.setFrom(selectedFrom);
-            transaction.setTo(selectedTo);
+            transaction.setFrom(fromId);
+            transaction.setTo(toId);
             transaction.setGroupId(groupId);
             transaction.setTitle(description);
         } catch (Exception e) {

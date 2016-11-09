@@ -55,7 +55,6 @@ public class AddTransactionFragment extends MvpFragment<AddTransactionPresenter>
 
         spinnerFrom = (Spinner)view.findViewById(R.id.from_dropdown);
         spinnerAdapterFrom = new ArrayAdapter<CharSequence>(getActivity(), R.layout.support_simple_spinner_dropdown_item);
-//        spinnerAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.blank_array, R.layout.support_simple_spinner_dropdown_item);
         spinnerFrom.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -69,7 +68,6 @@ public class AddTransactionFragment extends MvpFragment<AddTransactionPresenter>
 
         spinnerTo = (Spinner)view.findViewById(R.id.to_dropdown);
         spinnerAdapterTo = new ArrayAdapter<CharSequence>(getActivity(), R.layout.support_simple_spinner_dropdown_item);
-//        spinnerAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.blank_array, R.layout.support_simple_spinner_dropdown_item);
         spinnerTo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
