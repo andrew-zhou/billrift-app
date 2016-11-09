@@ -6,5 +6,7 @@
     <string name="add_transaction">Add Transaction</string>
     <string name="see_balances">See Balances</string>
     <string name="empty">No Transactions :(</string>
+    <string name="receipt_title">Receipt Title</string>
+    <string name="receipt_msg">Receipt Message</string>
     <string-array name="blank_array"></string-array>
 </resources>

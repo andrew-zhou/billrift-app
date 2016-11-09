@@ -6,8 +6,18 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.widget.LinearLayout;
 
+import com.microblink.activity.SegmentScanActivity;
+import com.microblink.ocr.ScanConfiguration;
+import com.microblink.recognizers.blinkocr.engine.BlinkOCREngineOptions;
+import com.microblink.recognizers.blinkocr.parser.generic.AmountParserSettings;
+import com.microblink.recognizers.blinkocr.parser.generic.RawParserSettings;
+import com.microblink.recognizers.blinkocr.parser.mobilecoupons.MobileCouponsParserSettings;
+import com.microblink.results.ocr.OcrFont;
+
 public class AddTransactionActivity extends FragmentActivity implements AddTransactionFragment.Listener {
     public static final String GROUP_ID_KEY = "GROUP_ID_KEY";
+    private static final String NAME_RECEIPT = "Receipt";
+    private static final int RECEIPT_REQUEST_CODE = 100;
 
     private Integer groupId;
     private AddTransactionFragment fragment;
@@ -47,6 +57,30 @@ public class AddTransactionActivity extends FragmentActivity implements AddTrans
 
     @Override
     public void goToScan() {
+        // BlinkInput OCR
+        Intent intent = new Intent(this, SegmentScanActivity.class);
+        intent.putExtra(SegmentScanActivity.EXTRAS_LICENSE_KEY, "RE737XBD-ATCTQ4RK-IIONOM33-3GGUK4TK-7WQFY2X5-UBOGV7NA-LRVP2AFI-KAIWDWMP");
+        BlinkOCREngineOptions options = new BlinkOCREngineOptions();
+        options.addAllDigitsToWhitelist(OcrFont.OCR_FONT_ANY);
+//        options.addLowercaseCharsToWhitelist(OcrFont.OCR_FONT_ANY);
+//        options.addUppercaseCharsToWhitelist(OcrFont.OCR_FONT_ANY);
+        options.addCharToWhitelist('$', OcrFont.OCR_FONT_ANY);
+        options.addCharToWhitelist('.', OcrFont.OCR_FONT_ANY);
+        options.addCharToWhitelist('-', OcrFont.OCR_FONT_ANY);
+        options.addCharToWhitelist('%', OcrFont.OCR_FONT_ANY);
+        options.setMinimumLineHeight(10);
+        options.setMaximumLineHeight(50);
+        options.setMaximumCharsExpected(3000);
+        options.setColorDropoutEnabled(false);
 
+        RawParserSettings parserSettings = new RawParserSettings();
+        parserSettings.setOcrEngineOptions(options);
+
+        ScanConfiguration conf[] = new ScanConfiguration[] {
+            new ScanConfiguration(R.string.receipt_title, R.string.receipt_msg, NAME_RECEIPT, parserSettings)
+        };
+
+        intent.putExtra(SegmentScanActivity.EXTRAS_SCAN_CONFIGURATION, conf);
+        startActivityForResult(intent, RECEIPT_REQUEST_CODE);
     }
 }
