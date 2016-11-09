@@ -1,25 +1,21 @@
 package com.BillRift.API;
 
+import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Server {
-    private static final String API_URL = "http://localhost:3000";
-    private static APIRoutes apiRoutes;
+    private static final String API_BASE_URL = "http://localhost:3000";
 
-    public static APIRoutes getAPIRoutes() {
-        if (apiRoutes == null) {
-            Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(API_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-            apiRoutes = retrofit.create(APIRoutes.class);
-        }
-        return apiRoutes;
+    private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+
+    private static Retrofit.Builder builder =
+            new Retrofit.Builder()
+                .baseUrl(API_BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create());
+
+    public static <S> S createService(Class<S> serviceClass) {
+        Retrofit retrofit = builder.client(httpClient.build()).build();
+        return retrofit.create(serviceClass);
     }
-
-    public interface APIRoutes {
-        // TODO
-    }
-
 }
