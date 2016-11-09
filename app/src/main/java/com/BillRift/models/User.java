@@ -1,10 +1,12 @@
 package com.BillRift.models;
 
+import java.io.Serializable;
+
 /**
  * Created by Zal on 2016-10-15.
  */
 
-public class User {
+public class User implements Serializable {
     // TODO: @SerializedName
     private String displayName;
     private String email;

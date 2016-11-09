@@ -1,10 +1,12 @@
 package com.BillRift.models;
 
+import java.io.Serializable;
+
 /**
  * Created by Zal on 2016-10-15.
  */
 
-public class Transaction {
+public class Transaction implements Serializable {
     private String from;
     private String to;
     private Double amount;

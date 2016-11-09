@@ -4,10 +4,11 @@ package com.BillRift.models;
  * Created by Zal on 2016-10-15.
  */
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Group {
+public class Group implements Serializable {
     // TODO: @SerializedName
     public Integer id;
     private String name;
