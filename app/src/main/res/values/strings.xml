@@ -9,4 +9,5 @@
     <string name="receipt_title">Receipt Title</string>
     <string name="receipt_msg">Receipt Message</string>
     <string-array name="blank_array"></string-array>
+    <string name="server_client_id">482013788758-al8e1mrkf74ke5q6recuji5l781e3g9r.apps.googleusercontent.com</string>
 </resources>

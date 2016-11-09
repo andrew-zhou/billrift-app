@@ -3,8 +3,16 @@ package com.BillRift;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
+
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 public class LoginActivity extends FragmentActivity implements LoginFragment.Listener {
+    private static final int RC_SIGN_IN = 9001;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -12,15 +20,39 @@ public class LoginActivity extends FragmentActivity implements LoginFragment.Lis
     }
 
     @Override
-    public void goToGroupsActivity() {
-        // TODO
-
-        Intent groupListIntent = new Intent(this, GroupListActivity.class);
-        startActivity(groupListIntent);
-
-//        Intent intent = TransactionListActivity.makeIntent(this, 1);
-//        startActivity(intent);
+    public void goToGoogleLogin(GoogleApiClient googleApiClient) {
+        // TODO: OAUTH To start login
+        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
+        startActivityForResult(signInIntent, RC_SIGN_IN);
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent
+        if (requestCode == RC_SIGN_IN) {
+            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+
+            if (result.isSuccess()) {
+                // Signed in successfully, show authenticated UI.
+                GoogleSignInAccount acct = result.getSignInAccount();
+                String idToken = acct.getIdToken();
+
+                // TODO: handle login success
+                // Add user data to user model
+                // send token to server and validate server-side
+                Log.w("GoogleSignIn", "Login success: " + acct);
+            } else {
+                // TODO: handle login failure
+                Log.w("GoogleSignIn", "Login failure");
+            }
+        }
+    }
+
+    // Intent to start groupActivity
+//    Intent groupListIntent = new Intent(this, GroupListActivity.class);
+//    startActivity(groupListIntent);
 }
 
 
