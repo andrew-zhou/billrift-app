@@ -83,4 +83,11 @@ public class AddTransactionActivity extends FragmentActivity implements AddTrans
         intent.putExtra(SegmentScanActivity.EXTRAS_SCAN_CONFIGURATION, conf);
         startActivityForResult(intent, RECEIPT_REQUEST_CODE);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == RECEIPT_REQUEST_CODE) {
+
+        }
+    }
 }
