@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TransactionListPresenter extends BasePresenter<List<Transaction>, TransactionListView> {
-    boolean isLoaded = false;
+    private boolean isLoaded = false;
 
     public TransactionListPresenter(int groupId) {
         super();

@@ -1,5 +1,6 @@
 package com.BillRift;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,6 +24,7 @@ public class TransactionListFragment extends MvpFragment<TransactionListPresente
     private static final int POSITION_LOADING = 1;
     private static final int POSITION_EMPTY = 2;
 
+    @Nullable private Listener listener;
     private Button showBalances;
     private Button addTransaction;
     private ViewAnimator viewAnimator;
@@ -59,6 +61,18 @@ public class TransactionListFragment extends MvpFragment<TransactionListPresente
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        listener = (Listener) context;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        listener = null;
+    }
+
+    @Override
     protected TransactionListPresenter createPresenter() {
         return new TransactionListPresenter(getArguments().getInt(GROUP_ID_KEY));
     }
@@ -82,10 +96,21 @@ public class TransactionListFragment extends MvpFragment<TransactionListPresente
     @Override
     public void goToAddTransaction() {
         // TODO
+        if (listener != null) {
+            listener.goToAddTransactionActivity();
+        }
     }
 
     @Override
     public void goToShowBalances() {
         // TODO
+        if (listener != null) {
+            listener.goToShowBalancesActivity();
+        }
+    }
+
+    public interface Listener {
+        void goToAddTransactionActivity();
+        void goToShowBalancesActivity();
     }
 }

@@ -6,14 +6,14 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.widget.LinearLayout;
 
-public class TransactionListActivity extends FragmentActivity implements TransactionListFragment.Listener {
+public class AddTransactionActivity extends FragmentActivity implements AddTransactionFragment.Listener {
     public static final String GROUP_ID_KEY = "GROUP_ID_KEY";
 
     private Integer groupId;
-    private TransactionListFragment fragment;
+    private AddTransactionFragment fragment;
 
     public static Intent makeIntent(Context from, Integer groupId) {
-        Intent intent = new Intent(from, TransactionListActivity.class);
+        Intent intent = new Intent(from, AddTransactionActivity.class);
         intent.putExtra(GROUP_ID_KEY, groupId);
         return intent;
     }
@@ -24,14 +24,14 @@ public class TransactionListActivity extends FragmentActivity implements Transac
 
         groupId = getIntent().getIntExtra(GROUP_ID_KEY, -1);
 
-        setContentView(R.layout.activity_group_transaction);
+        setContentView(R.layout.activity_add_transaction);
         LinearLayout layout = (LinearLayout)findViewById(R.id.linear_layout);
 
         LinearLayout container = new LinearLayout(this);
         container.setOrientation(LinearLayout.HORIZONTAL);
         container.setId(R.id.auto);
 
-        fragment = new TransactionListFragment();
+        fragment = new AddTransactionFragment();
         Bundle bundle = new Bundle();
         bundle.putInt(TransactionListFragment.GROUP_ID_KEY, groupId);
         fragment.setArguments(bundle);
@@ -41,12 +41,12 @@ public class TransactionListActivity extends FragmentActivity implements Transac
     }
 
     @Override
-    public void goToAddTransactionActivity() {
-        startActivity(AddTransactionActivity.makeIntent(this, groupId));
+    public void finishSubmission() {
+        finish();
     }
 
     @Override
-    public void goToShowBalancesActivity() {
+    public void goToScan() {
 
     }
 }

@@ -6,4 +6,5 @@
     <string name="add_transaction">Add Transaction</string>
     <string name="see_balances">See Balances</string>
     <string name="empty">No Transactions :(</string>
+    <string-array name="blank_array"></string-array>
 </resources>

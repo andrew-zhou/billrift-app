@@ -18,6 +18,8 @@
         <activity android:name=".GroupListActivity" />
 
         <activity android:name=".TransactionListActivity" />
+
+        <activity android:name=".AddTransactionActivity" />
     </application>
 
 </manifest>
