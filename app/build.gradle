@@ -34,6 +34,7 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
     compile 'com.google.android.gms:play-services-auth:9.2.1'
     compile 'org.greenrobot:eventbus:3.0.0'
+    compile 'com.scottyab:aescrypt:0.0.1'
     compile('com.microblink:blinkocr:2.8.0@aar') {
         transitive = true
     }
