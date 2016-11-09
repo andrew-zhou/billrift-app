@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.BillRift.models.User;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
@@ -37,22 +39,26 @@ public class LoginActivity extends FragmentActivity implements LoginFragment.Lis
             if (result.isSuccess()) {
                 // Signed in successfully, show authenticated UI.
                 GoogleSignInAccount acct = result.getSignInAccount();
-                String idToken = acct.getIdToken();
 
                 // TODO: handle login success
-                // Add user data to user model
-                // send token to server and validate server-side
+                User curUser = GoogleOAuthHelper.getUserFrom(acct);
+
+                // Send token to server and validate server-side
+
+
+                // Navigate to group activity
+                Intent groupListIntent = new Intent(this, GroupListActivity.class);
+                startActivity(groupListIntent);
+
                 Log.w("GoogleSignIn", "Login success: " + acct);
             } else {
                 // TODO: handle login failure
                 Log.w("GoogleSignIn", "Login failure");
+
+                Toast.makeText(this, result.getStatus().getStatusMessage(), Toast.LENGTH_LONG).show();
             }
         }
     }
-
-    // Intent to start groupActivity
-//    Intent groupListIntent = new Intent(this, GroupListActivity.class);
-//    startActivity(groupListIntent);
 }
 
 
