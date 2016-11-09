@@ -24,6 +24,8 @@
         <activity android:name=".TransactionListActivity" />
 
         <activity android:name=".AddTransactionActivity" />
+
+        <activity android:name=".BalanceListActivity" />
     </application>
 
 </manifest>

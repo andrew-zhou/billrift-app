@@ -23,7 +23,7 @@ public class AddTransactionPresenter extends BasePresenter<List<User>, AddTransa
     public AddTransactionPresenter(int groupId) {
         super();
         this.groupId = groupId;
-        setModel(null);
+        setModel(new ArrayList<User>());
         // TODO: Make call to load users for group to database from server
         // In the callback:
         // transactionList = returnedValue;

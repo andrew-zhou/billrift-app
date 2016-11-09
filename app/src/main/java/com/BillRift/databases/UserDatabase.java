@@ -53,7 +53,7 @@ public class UserDatabase {
         return mockUsers;
 
         // TODO: Uncomment this when no longer mocking data
-//        synchronized(groupId) {
+//        synchronized(users) {
 //            Set<String> ids = GroupDatabase.getInstance().getGroup(groupId).getUserIds();
 //            ArrayList<User> u = new ArrayList<>();
 //            for(String id : ids) {
