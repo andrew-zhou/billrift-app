@@ -11,7 +11,6 @@ import retrofit2.http.Query;
  */
 
 public interface UserAPIRoutes {
-    // TODO: User API Routes
     @POST("/user/login")
     Call<ResponseBody> sendIdToken(@Query("idToken") String idToken);
 }
