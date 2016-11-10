@@ -29,6 +29,9 @@ public final class GoogleOAuthHelper {
         String id = account.getId();
         String idToken = account.getIdToken();
 
+        // Need to save the token at the first point it is accessible for encrypt/decrypt purposes
+        TokenManager.saveToken(idToken);
+
         User currentUser = new User(displayName, email, id, idToken);
         UserDatabase.getInstance().saveUser(currentUser);
 

@@ -1,11 +1,20 @@
 package com.BillRift.API;
 
+import com.BillRift.TokenManager;
+
+import java.io.IOException;
+
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Server {
     private static final String API_BASE_URL = "http://10.0.2.2:3000";
+
+    private static OkHttpClient.Builder httpClient = null;
 
     private static Retrofit.Builder builder =
             new Retrofit.Builder()
@@ -13,6 +22,24 @@ public class Server {
                 .addConverterFactory(GsonConverterFactory.create());
 
     public static <S> S createService(Class<S> serviceClass) {
+        if (httpClient == null) {
+            httpClient = new OkHttpClient.Builder();
+            httpClient.addInterceptor(new Interceptor() {
+                @Override
+                public Response intercept(Chain chain) throws IOException {
+                    Request original = chain.request();
+                    Request request = original;
+
+                    if (TokenManager.getToken() != null) {
+                        request = original.newBuilder()
+                                .header("auth-token", TokenManager.getToken())
+                                .build();
+                    }
+
+                    return chain.proceed(request);
+                }
+            });
+        }
         return builder.build().create(serviceClass);
     }
 }

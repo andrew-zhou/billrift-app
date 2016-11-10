@@ -3,6 +3,7 @@ package com.BillRift.databases;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.BillRift.TokenManager;
 import com.BillRift.models.Balance;
 import com.BillRift.security.CryptManager;
 
@@ -32,14 +33,14 @@ public class BalanceDatabase {
 
     public void saveBalance(@NonNull Balance balance) {
         synchronized(balances) {
-            balances.put(balance.getKey(), CryptManager.encryptObject(balance, "mocktoken" /* TODO: Get token here */ ));
+            balances.put(balance.getKey(), CryptManager.encryptObject(balance, TokenManager.getToken() /* TODO: Get token here */ ));
         }
     }
 
     @Nullable
     public Balance getBalance(String from, String to) {
         synchronized(balances) {
-            return (Balance) CryptManager.decryptString(balances.get(Balance.getKey(from, to)), "mocktoken" /* TODO: Get token here */ );
+            return (Balance) CryptManager.decryptString(balances.get(Balance.getKey(from, to)), TokenManager.getToken() /* TODO: Get token here */ );
         }
     }
 
@@ -56,7 +57,7 @@ public class BalanceDatabase {
 //        synchronized (balances) {
 //            List<Balance> b = new ArrayList<>();
 //            for (String s : balances.values()) {
-//                Balance balance = (Balance) CryptManager.decryptString(s, "mocktoken" /* TODO: Get token here */ );
+//                Balance balance = (Balance) CryptManager.decryptString(s, TokenManager.getToken() /* TODO: Get token here */ );
 //                if (balance.getGroup() == groupId) {
 //                    b.add(balance);
 //                }

@@ -2,6 +2,7 @@ package com.BillRift.databases;
 
 import android.support.annotation.NonNull;
 
+import com.BillRift.TokenManager;
 import com.BillRift.models.Transaction;
 import com.BillRift.security.CryptManager;
 
@@ -31,13 +32,13 @@ public class TransactionDatabase {
 
     public void saveTransaction(@NonNull Transaction transaction) {
         synchronized (transactions) {
-            transactions.put(transaction.getId(), CryptManager.encryptObject(transaction, "mocktoken" /* TODO: Get token here */ ));
+            transactions.put(transaction.getId(), CryptManager.encryptObject(transaction, TokenManager.getToken() /* TODO: Get token here */ ));
         }
     }
 
     public Transaction getTransaction(Integer id) {
         synchronized (transactions) {
-            return (Transaction) CryptManager.decryptString(transactions.get(id), "mocktoken" /* TODO: Get token here */ );
+            return (Transaction) CryptManager.decryptString(transactions.get(id), TokenManager.getToken() /* TODO: Get token here */ );
         }
     }
 
@@ -58,7 +59,7 @@ public class TransactionDatabase {
 //        synchronized (transactions) {
 //            ArrayList<Transaction> transactionList = new ArrayList<>();
 //            for (String transactionString : transactions.values()) {
-//                Transaction transaction = (Transaction) CryptManager.decryptString(transactionString, "mocktoken" /* TODO: Get token here */ );
+//                Transaction transaction = (Transaction) CryptManager.decryptString(transactionString, TokenManager.getToken() /* TODO: Get token here */ );
 //                if (transaction.getGroupId() == groupId) {
 //                    transactionList.add(transaction);
 //                }

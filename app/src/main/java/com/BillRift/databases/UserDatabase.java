@@ -3,6 +3,7 @@ package com.BillRift.databases;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.BillRift.TokenManager;
 import com.BillRift.models.User;
 import com.BillRift.security.CryptManager;
 
@@ -34,13 +35,13 @@ public class UserDatabase {
 
     @Nullable public User getUser(String id) {
         synchronized (users) {
-            return (User) CryptManager.decryptString(users.get(id), "mocktoken" /* TODO: Get token here */ );
+            return (User) CryptManager.decryptString(users.get(id), TokenManager.getToken() /* TODO: Get token here */ );
         }
     }
 
     public void saveUser(@NonNull User user) {
         synchronized (users) {
-            users.put(user.getId(), CryptManager.encryptObject(user, "mocktoken" /* TODO: Get token here */ ));
+            users.put(user.getId(), CryptManager.encryptObject(user, TokenManager.getToken() /* TODO: Get token here */ ));
         }
     }
 

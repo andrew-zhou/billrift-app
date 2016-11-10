@@ -3,6 +3,7 @@ package com.BillRift.databases;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.BillRift.TokenManager;
 import com.BillRift.models.Group;
 import com.BillRift.security.CryptManager;
 
@@ -34,7 +35,7 @@ public class GroupDatabase {
 
     @Nullable public Group getGroup(int id) {
         synchronized (groups) {
-            return (Group) CryptManager.decryptString(groups.get(id), "mocktoken" /* TODO: Get token here */ );
+            return (Group) CryptManager.decryptString(groups.get(id), TokenManager.getToken() /* TODO: Get token here */ );
         }
     }
 
@@ -43,7 +44,7 @@ public class GroupDatabase {
             // TODO: Remove once we stop mocking data
             int id = nextId++;
             group.setId(id);
-            groups.put(id, CryptManager.encryptObject(group, "mocktoken" /* TODO: Get token here */ ));
+            groups.put(id, CryptManager.encryptObject(group, TokenManager.getToken() /* TODO: Get token here */ ));
         }
     }
 }
