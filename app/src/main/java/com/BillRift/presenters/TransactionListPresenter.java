@@ -45,4 +45,11 @@ public class TransactionListPresenter extends BasePresenter<List<Transaction>, T
         view().goToShowBalances();
     }
 
+    public void addGroupMemberButtonClicked() {
+        view().showAddGroupMemberDialog();
+    }
+
+    public void addGroupMember(String email) {
+        // TODO: Network requests
+    }
 }
