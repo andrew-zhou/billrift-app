@@ -1,5 +1,7 @@
 package com.BillRift.models;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 /**
@@ -7,11 +9,17 @@ import java.io.Serializable;
  */
 
 public class Transaction implements Serializable {
+    @SerializedName("userFromId")
     private String from;
+    @SerializedName("userToId")
     private String to;
+    @SerializedName("amount")
     private Double amount;
+    @SerializedName("title")
     private String title;
+    @SerializedName("id")
     private Integer id;
+    @SerializedName("groupId")
     private Integer groupId;
 
     public Integer getId() {
@@ -50,15 +58,15 @@ public class Transaction implements Serializable {
         return amount;
     }
 
-    public void setAmount(double amount) {
-        this.amount = amount;
-    }
-
     public String getTitle() {
         return title;
     }
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public void setAmount(Double amount) {
+        this.amount = amount;
     }
 }

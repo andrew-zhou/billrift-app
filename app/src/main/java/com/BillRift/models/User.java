@@ -1,5 +1,7 @@
 package com.BillRift.models;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 /**
@@ -7,17 +9,21 @@ import java.io.Serializable;
  */
 
 public class User implements Serializable {
-    // TODO: @SerializedName
+    @SerializedName("name")
     private String displayName;
+    @SerializedName("email")
     private String email;
+    @SerializedName("googleId")
     private String id;
-    private String idToken;
 
-    public User(String displayName, String email, String id, String idToken) {
+    public User() {
+        this(null, null, null);
+    }
+
+    public User(String displayName, String email, String id) {
         this.displayName = displayName;
         this.email = email;
         this.id = id;
-        this.idToken = idToken;
     }
 
     public String getDisplayName() {
@@ -32,11 +38,15 @@ public class User implements Serializable {
         return email;
     }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getId() {
         return id;
     }
 
-    public String getIdToken() {
-        return idToken;
+    public void setId(String id) {
+        this.id = id;
     }
 }

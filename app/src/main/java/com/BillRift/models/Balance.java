@@ -1,5 +1,7 @@
 package com.BillRift.models;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 /**
@@ -7,12 +9,18 @@ import java.io.Serializable;
  */
 
 public class Balance implements Serializable {
+    @SerializedName("from")
     private String from;
+    @SerializedName("to")
     private String to;
-    private double amount;
-    private int group;
+    @SerializedName("amount")
+    private Double amount;
+    @SerializedName("groupId")
+    private Integer group;
 
-    public Balance(String from, String to, double amount, int group) {
+    public Balance() {}
+
+    public Balance(String from, String to, Double amount, Integer group) {
         this.from = from;
         this.to = to;
         this.amount = amount;
@@ -35,19 +43,19 @@ public class Balance implements Serializable {
         this.to = to;
     }
 
-    public double getAmount() {
+    public Double getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
     }
 
-    public int getGroup() {
+    public Integer getGroup() {
         return group;
     }
 
-    public void setGroup(int group) {
+    public void setGroup(Integer group) {
         this.group = group;
     }
 

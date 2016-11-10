@@ -48,14 +48,14 @@ public class UserDatabase {
     public List<User> getUsersForGroup(@NonNull Integer groupId) {
         List<User> mockUsers = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            User u = new User("User " + Integer.toString(i), "", Integer.toString(i), "");
+            User u = new User("User " + Integer.toString(i), "", Integer.toString(i));
             mockUsers.add(u);
         }
         return mockUsers;
 
         // TODO: Uncomment this when no longer mocking data
 //        synchronized(users) {
-//            Set<String> ids = GroupDatabase.getInstance().getGroup(groupId).getUserIds();
+//            List<String> ids = GroupDatabase.getInstance().getGroup(groupId).getUserIds();
 //            ArrayList<User> u = new ArrayList<>();
 //            for(String id : ids) {
 //                u.add(getUser(id));
