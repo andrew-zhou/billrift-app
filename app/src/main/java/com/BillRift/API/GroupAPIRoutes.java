@@ -19,13 +19,13 @@ import retrofit2.http.Path;
 
 public interface GroupAPIRoutes {
     @GET("/group/{id}/balances")
-    Call<List<Balance>> balances(@Path("id") String groupId);
+    Call<List<Balance>> balances(@Path("id") Integer groupId);
 
     @GET("/group/{id}/transactions")
-    Call<List<Transaction>> transactions(@Path("id") String groupId);
+    Call<List<Transaction>> transactions(@Path("id") Integer groupId);
 
     @GET("/group/{id}/users")
-    Call<List<User>> users(@Path("id") String groupId);
+    Call<List<User>> users(@Path("id") Integer groupId);
 
     @POST("/group")
     Call<ResponseBody> group(@Body String name);
