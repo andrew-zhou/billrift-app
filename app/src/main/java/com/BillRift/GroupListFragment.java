@@ -1,13 +1,17 @@
 package com.BillRift;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ViewAnimator;
 
 import com.BillRift.models.Group;
@@ -27,11 +31,20 @@ public class GroupListFragment extends MvpFragment<GroupListPresenter> implement
 
     private ViewAnimator animator;
     private GroupAdapter adapter;
+    private Button addGroupButton;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_grouplist, container, false);
+
+        addGroupButton = (Button) view.findViewById(R.id.btn_add_group);
+        addGroupButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                presenter.onAddGroupClicked();
+            }
+        });
 
         animator = (ViewAnimator) view.findViewById(R.id.animator);
         RecyclerView recyclerView = (RecyclerView) animator.getChildAt(POSITION_LIST);
@@ -73,5 +86,31 @@ public class GroupListFragment extends MvpFragment<GroupListPresenter> implement
     @Override
     public void showEmpty() {
         animator.setDisplayedChild(POSITION_EMPTY);
+    }
+
+    @Override
+    public void showAddGroupDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Enter New Group Name");
+
+        final EditText input = new EditText(getActivity());
+        builder.setView(input);
+
+        builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                presenter.addGroup(input.getText().toString());
+                dialogInterface.dismiss();
+            }
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.cancel();
+            }
+        });
+
+        builder.show();
     }
 }

@@ -12,4 +12,5 @@ public interface GroupListView {
     void showGroups(List<Group> groups);
     void showLoading();
     void showEmpty();
+    void showAddGroupDialog();
 }

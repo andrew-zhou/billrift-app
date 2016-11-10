@@ -60,28 +60,13 @@ public class GroupListPresenter extends BasePresenter<List<Group>, GroupListView
     }
 
     public void onAddGroupClicked() {
-        // TODO: Change to add appropriate group
-        Group group = new Group("Hello");
-
-        // Update view immediately
-        model.add(group);
-        GroupDatabase.getInstance().saveGroup(group);
-        updateView();
+        view().showAddGroupDialog();
     }
 
-    // It's OK for this class not to be static and to keep a reference to the Presenter, as this
-    // is retained during orientation changes and is lightweight (has no activity/view reference)
-//    private class LoadDataTask extends AsyncTask<Void, Void, Void> {
-//        @Override
-//        protected Void doInBackground(Void... params) {
-//            SystemClock.sleep(3000);
-//            return null;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(Void aVoid) {
-//            setModel(CounterDatabase.getInstance().getAllCounters());
-//            isLoadingData = false;
-//        }
-//    }
+    public void addGroup(String groupName) {
+        // TODO: Make network call to create new group
+        // After creating new group, make a call to get groups from server if success
+        // After success to get groups from server refresh the database
+        // Then update view
+    }
 }
