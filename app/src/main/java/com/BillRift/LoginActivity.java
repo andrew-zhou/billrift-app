@@ -15,6 +15,11 @@ import com.google.android.gms.common.api.GoogleApiClient;
 public class LoginActivity extends FragmentActivity implements LoginFragment.Listener {
     private static final int RC_SIGN_IN = 9001;
 
+    interface LoginHandler {
+        void onLoginSuccess();
+        void onLoginFailed(String message);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,19 +45,25 @@ public class LoginActivity extends FragmentActivity implements LoginFragment.Lis
                 // Signed in successfully, show authenticated UI.
                 GoogleSignInAccount acct = result.getSignInAccount();
 
-                // TODO: handle login success
                 User curUser = GoogleOAuthHelper.getUserFrom(acct);
 
                 // Send token to server and validate server-side
+                GoogleOAuthHelper.sendIdToken(curUser.getIdToken(), new LoginHandler() {
+                    @Override
+                    public void onLoginSuccess() {
+                        // Navigate to group activity
+                        Intent groupListIntent = new Intent(LoginActivity.this, GroupListActivity.class);
+                        startActivity(groupListIntent);
+                    }
 
-
-                // Navigate to group activity
-                Intent groupListIntent = new Intent(this, GroupListActivity.class);
-                startActivity(groupListIntent);
+                    @Override
+                    public void onLoginFailed(String message) {
+                        Toast.makeText(LoginActivity.this, message, Toast.LENGTH_LONG).show();
+                    }
+                });
 
                 Log.w("GoogleSignIn", "Login success: " + acct);
             } else {
-                // TODO: handle login failure
                 Log.w("GoogleSignIn", "Login failure");
 
                 Toast.makeText(this, result.getStatus().getStatusMessage(), Toast.LENGTH_LONG).show();
