@@ -1,5 +1,6 @@
 package com.BillRift;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -15,6 +16,8 @@ import com.google.android.gms.common.api.GoogleApiClient;
 public class LoginActivity extends FragmentActivity implements LoginFragment.Listener {
     private static final int RC_SIGN_IN = 9001;
 
+    private ProgressDialog progressDialog;
+
     interface LoginHandler {
         void onLoginSuccess();
         void onLoginFailed(String message);
@@ -28,9 +31,11 @@ public class LoginActivity extends FragmentActivity implements LoginFragment.Lis
 
     @Override
     public void goToGoogleLogin(GoogleApiClient googleApiClient) {
-        // TODO: OAUTH To start login
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
+
+        // Responsiveness: Show progress dialog on login
+        showProgressDialog();
     }
 
     @Override
@@ -51,6 +56,9 @@ public class LoginActivity extends FragmentActivity implements LoginFragment.Lis
                 GoogleOAuthHelper.sendIdToken(curUser.getIdToken(), new LoginHandler() {
                     @Override
                     public void onLoginSuccess() {
+                        // Responsiveness: Hide progress dialog
+                        hideProgressDialog();
+
                         // Navigate to group activity
                         Intent groupListIntent = new Intent(LoginActivity.this, GroupListActivity.class);
                         startActivity(groupListIntent);
@@ -58,6 +66,8 @@ public class LoginActivity extends FragmentActivity implements LoginFragment.Lis
 
                     @Override
                     public void onLoginFailed(String message) {
+                        // Responsiveness: Hide progress dialog and show error
+                        hideProgressDialog();
                         Toast.makeText(LoginActivity.this, message, Toast.LENGTH_LONG).show();
                     }
                 });
@@ -66,8 +76,26 @@ public class LoginActivity extends FragmentActivity implements LoginFragment.Lis
             } else {
                 Log.w("GoogleSignIn", "Login failure");
 
+                // Responsiveness: Hide progress dialog and show error
+                hideProgressDialog();
                 Toast.makeText(this, result.getStatus().getStatusMessage(), Toast.LENGTH_LONG).show();
             }
+        }
+    }
+
+    private void showProgressDialog() {
+        if (progressDialog == null) {
+            progressDialog = new ProgressDialog(this);
+            progressDialog.setMessage(getString(R.string.loading));
+            progressDialog.setIndeterminate(true);
+        }
+
+        progressDialog.show();
+    }
+
+    private void hideProgressDialog() {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.hide();
         }
     }
 }
