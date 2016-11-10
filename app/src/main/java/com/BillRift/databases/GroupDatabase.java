@@ -7,7 +7,9 @@ import com.BillRift.TokenManager;
 import com.BillRift.models.Group;
 import com.BillRift.security.CryptManager;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -35,16 +37,23 @@ public class GroupDatabase {
 
     @Nullable public Group getGroup(int id) {
         synchronized (groups) {
-            return (Group) CryptManager.decryptString(groups.get(id), TokenManager.getToken() /* TODO: Get token here */ );
+            return (Group) CryptManager.decryptString(groups.get(id), TokenManager.getToken());
         }
     }
 
     public void saveGroup(@NonNull Group group) {
         synchronized (groups) {
-            // TODO: Remove once we stop mocking data
-            int id = nextId++;
-            group.setId(id);
-            groups.put(id, CryptManager.encryptObject(group, TokenManager.getToken() /* TODO: Get token here */ ));
+            groups.put(group.getId(), CryptManager.encryptObject(group, TokenManager.getToken()));
+        }
+    }
+
+    public List<Group> getAllGroups() {
+        synchronized (groups) {
+            List<Group> g = new ArrayList<>();
+            for (String groupStr : groups.values()) {
+                g.add((Group) CryptManager.decryptString(groupStr, TokenManager.getToken()));
+            }
+            return g;
         }
     }
 }
