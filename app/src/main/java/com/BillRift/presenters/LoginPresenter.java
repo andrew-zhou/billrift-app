@@ -36,7 +36,7 @@ public class LoginPresenter extends BasePresenter<Object, LoginView> {
         call.enqueue(new Callback<List<Group>>() {
             @Override
             public void onResponse(Call<List<Group>> call, Response<List<Group>> response) {
-                Log.d("GetUserGroups", "Groups retrieved succesfully");
+                Log.d("GetUserGroups", "Groups retrieved successfully");
 
                 if (response.isSuccessful()) {
                     List<Group> groups = response.body();

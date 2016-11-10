@@ -55,7 +55,6 @@ public class LoginActivity extends FragmentActivity implements LoginFragment.Lis
     public void showGroupErrorMessage(String message) {
         // Responsiveness: Hide progress dialog
         hideProgressDialog();
-
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
