@@ -27,12 +27,11 @@ public class Server {
             httpClient.addInterceptor(new Interceptor() {
                 @Override
                 public Response intercept(Chain chain) throws IOException {
-                    Request original = chain.request();
-                    Request request = original;
+                    Request request = chain.request();
 
                     if (TokenManager.getToken() != null) {
-                        request = original.newBuilder()
-                                .header("auth-token", TokenManager.getToken())
+                        request = request.newBuilder()
+                                .addHeader("auth-token", TokenManager.getToken())
                                 .build();
                     }
 
@@ -40,6 +39,6 @@ public class Server {
                 }
             });
         }
-        return builder.build().create(serviceClass);
+        return builder.client(httpClient.build()).build().create(serviceClass);
     }
 }

@@ -33,14 +33,14 @@ public class BalanceDatabase {
 
     public void saveBalance(@NonNull Balance balance) {
         synchronized(balances) {
-            balances.put(balance.getKey(), CryptManager.encryptObject(balance, TokenManager.getToken() /* TODO: Get token here */ ));
+            balances.put(balance.getKey(), CryptManager.encryptObject(balance, TokenManager.getToken()));
         }
     }
 
     @Nullable
     public Balance getBalance(String from, String to) {
         synchronized(balances) {
-            return (Balance) CryptManager.decryptString(balances.get(Balance.getKey(from, to)), TokenManager.getToken() /* TODO: Get token here */ );
+            return (Balance) CryptManager.decryptString(balances.get(Balance.getKey(from, to)), TokenManager.getToken());
         }
     }
 
@@ -48,7 +48,7 @@ public class BalanceDatabase {
         // Mock data
         List<Balance> list = new ArrayList<>();
         for (int i = 1; i <= 5; i++) {
-            Balance Balance = new Balance(Integer.toString(i % 5), Integer.toString((i+1) % 5), i+10, 1);
+            Balance Balance = new Balance(Integer.toString(i % 5), Integer.toString((i+1) % 5), i+10.0, 1);
             list.add(Balance);
         }
         return list;
@@ -57,7 +57,7 @@ public class BalanceDatabase {
 //        synchronized (balances) {
 //            List<Balance> b = new ArrayList<>();
 //            for (String s : balances.values()) {
-//                Balance balance = (Balance) CryptManager.decryptString(s, TokenManager.getToken() /* TODO: Get token here */ );
+//                Balance balance = (Balance) CryptManager.decryptString(s, TokenManager.getToken());
 //                if (balance.getGroup() == groupId) {
 //                    b.add(balance);
 //                }

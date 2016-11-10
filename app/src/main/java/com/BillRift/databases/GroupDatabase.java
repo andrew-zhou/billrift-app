@@ -21,9 +21,6 @@ public class GroupDatabase {
 
     private final Map<Integer, String> groups;
 
-    // TODO: Remove once we stop mocking data
-    private int nextId = 1;
-
     private GroupDatabase() {
         groups = new HashMap<>();
     }

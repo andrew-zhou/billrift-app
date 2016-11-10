@@ -32,13 +32,13 @@ public class TransactionDatabase {
 
     public void saveTransaction(@NonNull Transaction transaction) {
         synchronized (transactions) {
-            transactions.put(transaction.getId(), CryptManager.encryptObject(transaction, TokenManager.getToken() /* TODO: Get token here */ ));
+            transactions.put(transaction.getId(), CryptManager.encryptObject(transaction, TokenManager.getToken()));
         }
     }
 
     public Transaction getTransaction(Integer id) {
         synchronized (transactions) {
-            return (Transaction) CryptManager.decryptString(transactions.get(id), TokenManager.getToken() /* TODO: Get token here */ );
+            return (Transaction) CryptManager.decryptString(transactions.get(id), TokenManager.getToken());
         }
     }
 
@@ -48,7 +48,7 @@ public class TransactionDatabase {
             Transaction transaction = new Transaction();
             transaction.setId(i);
             transaction.setTitle("Test title: " + Integer.toString(i));
-            transaction.setAmount(i - 10);
+            transaction.setAmount(i - 10.0);
             transaction.setFrom("Test from: " + Integer.toString(i));
             transaction.setTo("Test to: " + Integer.toString(i));
             list.add(transaction);

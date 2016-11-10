@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.BillRift.models.User;
 import com.BillRift.presenters.LoginPresenter;
 import com.BillRift.views.LoginView;
 import com.google.android.gms.auth.api.Auth;
@@ -84,7 +85,26 @@ public class LoginFragment extends MvpFragment<LoginPresenter> implements LoginV
         }
     }
 
+    @Override
+    public void goToGroupsView() {
+        if(listener != null) {
+            listener.goToGroupsView();
+        }
+    }
+
+    public void showGroupErrorMessage(String message) {
+        if(listener != null) {
+            listener.showGroupErrorMessage(message);
+        }
+    }
+
     public interface Listener {
         void goToGoogleLogin(GoogleApiClient googleApiClient);
+        void goToGroupsView();
+        void showGroupErrorMessage(String message);
+    }
+
+    public void getUserGroups(User curUser) {
+        presenter.getUserGroups(curUser);
     }
 }

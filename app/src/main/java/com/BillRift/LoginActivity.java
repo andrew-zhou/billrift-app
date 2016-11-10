@@ -17,6 +17,7 @@ public class LoginActivity extends FragmentActivity implements LoginFragment.Lis
     private static final int RC_SIGN_IN = 9001;
 
     private ProgressDialog progressDialog;
+    private LoginFragment loginFragment;
 
     interface LoginHandler {
         void onLoginSuccess();
@@ -27,6 +28,8 @@ public class LoginActivity extends FragmentActivity implements LoginFragment.Lis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        loginFragment = (LoginFragment) getFragmentManager().findFragmentById(R.id.login_fragment);
     }
 
     @Override
@@ -36,6 +39,24 @@ public class LoginActivity extends FragmentActivity implements LoginFragment.Lis
 
         // Responsiveness: Show progress dialog on login
         showProgressDialog();
+    }
+
+    @Override
+    public void goToGroupsView() {
+        // Responsiveness: Hide progress dialog
+        hideProgressDialog();
+
+        // Navigate to group activity
+        Intent groupListIntent = new Intent(LoginActivity.this, GroupListActivity.class);
+        startActivity(groupListIntent);
+    }
+
+    @Override
+    public void showGroupErrorMessage(String message) {
+        // Responsiveness: Hide progress dialog
+        hideProgressDialog();
+
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -50,18 +71,13 @@ public class LoginActivity extends FragmentActivity implements LoginFragment.Lis
                 // Signed in successfully, show authenticated UI.
                 GoogleSignInAccount acct = result.getSignInAccount();
 
-                User curUser = GoogleOAuthHelper.getUserFrom(acct);
+                final User curUser = GoogleOAuthHelper.getUserFrom(acct);
 
                 // Send token to server and validate server-side
-                GoogleOAuthHelper.sendIdToken(curUser.getIdToken(), new LoginHandler() {
+                GoogleOAuthHelper.sendIdToken(TokenManager.getToken(), new LoginHandler() {
                     @Override
                     public void onLoginSuccess() {
-                        // Responsiveness: Hide progress dialog
-                        hideProgressDialog();
-
-                        // Navigate to group activity
-                        Intent groupListIntent = new Intent(LoginActivity.this, GroupListActivity.class);
-                        startActivity(groupListIntent);
+                        loginFragment.getUserGroups(curUser);
                     }
 
                     @Override

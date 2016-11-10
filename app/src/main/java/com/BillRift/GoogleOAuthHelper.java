@@ -40,7 +40,7 @@ public final class GoogleOAuthHelper {
 
     public static void sendIdToken(String idToken, final LoginActivity.LoginHandler handler) {
         UserAPIRoutes loginService = Server.createService(UserAPIRoutes.class);
-        Call<ResponseBody> call = loginService.sendIdToken(idToken);
+        Call<ResponseBody> call = loginService.sendIdToken();
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
