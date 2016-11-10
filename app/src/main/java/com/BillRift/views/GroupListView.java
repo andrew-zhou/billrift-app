@@ -13,4 +13,6 @@ public interface GroupListView {
     void showLoading();
     void showEmpty();
     void showAddGroupDialog();
+    void showProgressBar(boolean show);
+    void showError();
 }

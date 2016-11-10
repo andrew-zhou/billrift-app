@@ -1,5 +1,6 @@
 package com.BillRift;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 import android.widget.ViewAnimator;
 
 import com.BillRift.models.Group;
@@ -32,6 +34,7 @@ public class GroupListFragment extends MvpFragment<GroupListPresenter> implement
     private ViewAnimator animator;
     private GroupAdapter adapter;
     private Button addGroupButton;
+    private ProgressDialog progressDialog;
 
     @Nullable
     @Override
@@ -112,5 +115,35 @@ public class GroupListFragment extends MvpFragment<GroupListPresenter> implement
         });
 
         builder.show();
+    }
+
+    @Override
+    public void showProgressBar(boolean show) {
+        if (show) {
+            showProgressDialog();
+        } else {
+            hideProgressDialog();
+        }
+    }
+
+    @Override
+    public void showError() {
+        Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
+    }
+
+    private void showProgressDialog() {
+        if (progressDialog == null) {
+            progressDialog = new ProgressDialog(getActivity());
+            progressDialog.setMessage(getString(R.string.loading));
+            progressDialog.setIndeterminate(true);
+        }
+
+        progressDialog.show();
+    }
+
+    private void hideProgressDialog() {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.hide();
+        }
     }
 }

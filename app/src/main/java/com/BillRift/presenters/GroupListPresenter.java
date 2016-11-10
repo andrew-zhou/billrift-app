@@ -2,12 +2,20 @@ package com.BillRift.presenters;
 
 import android.support.annotation.NonNull;
 
+import com.BillRift.API.GroupAPIRoutes;
+import com.BillRift.API.GroupsAPIRoutes;
+import com.BillRift.API.Server;
 import com.BillRift.databases.GroupDatabase;
 import com.BillRift.models.Group;
 import com.BillRift.views.GroupListView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by Dweep on 2016-10-15.
@@ -39,24 +47,7 @@ public class GroupListPresenter extends BasePresenter<List<Group>, GroupListView
 
     private void loadData() {
         isLoadingData = true;
-//        new LoadDataTask().execute();
-//        setModel(GroupDatabase.getInstance())
-        List<Group> mockData = new ArrayList<>();
-        // TODO: load actual data from db
-        Group vacation = new Group("Vacation");
-        vacation.setBalance(10.00);
-        Group house = new Group("House Expenses");
-        house.setBalance(0.0);
-        Group architecture = new Group("Architecture Party");
-        architecture.setBalance(-10.00);
-        GroupDatabase.getInstance().saveGroup(vacation);
-        GroupDatabase.getInstance().saveGroup(house);
-        GroupDatabase.getInstance().saveGroup(architecture);
-        mockData.add(vacation);
-        mockData.add(house);
-        mockData.add(architecture);
-
-        setModel(mockData);
+        setModel(GroupDatabase.getInstance().getAllGroups());
     }
 
     public void onAddGroupClicked() {
@@ -68,5 +59,48 @@ public class GroupListPresenter extends BasePresenter<List<Group>, GroupListView
         // After creating new group, make a call to get groups from server if success
         // After success to get groups from server refresh the database
         // Then update view
+
+        view().showProgressBar(true);
+        final GroupsAPIRoutes groupsService = Server.createService(GroupsAPIRoutes.class);
+        GroupAPIRoutes groupService = Server.createService(GroupAPIRoutes.class);
+        Call<ResponseBody> makeGroup = groupService.group(groupName);
+        makeGroup.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    Call<List<Group>> newGroups = groupsService.groups();
+                    newGroups.enqueue(new Callback<List<Group>>() {
+                        @Override
+                        public void onResponse(Call<List<Group>> call, Response<List<Group>> response) {
+                            if (response.isSuccessful()) {
+                                for (Group g : response.body()) {
+                                    GroupDatabase.getInstance().saveGroup(g);
+                                }
+                                view().showProgressBar(false);
+                                updateView();
+                            } else {
+                                view().showProgressBar(false);
+                                view().showError();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<List<Group>> call, Throwable t) {
+                            view().showProgressBar(false);
+                            view().showError();
+                        }
+                    });
+                } else {
+                    view().showProgressBar(false);
+                    view().showError();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                view().showProgressBar(false);
+                view().showError();
+            }
+        });
     }
 }
