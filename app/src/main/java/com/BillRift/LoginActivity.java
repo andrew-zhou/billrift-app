@@ -3,8 +3,23 @@ package com.BillRift;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
+import android.widget.Toast;
+
+import com.BillRift.models.User;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 public class LoginActivity extends FragmentActivity implements LoginFragment.Listener {
+    private static final int RC_SIGN_IN = 9001;
+
+    interface LoginHandler {
+        void onLoginSuccess();
+        void onLoginFailed(String message);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -12,14 +27,48 @@ public class LoginActivity extends FragmentActivity implements LoginFragment.Lis
     }
 
     @Override
-    public void goToGroupsActivity() {
-        // TODO
+    public void goToGoogleLogin(GoogleApiClient googleApiClient) {
+        // TODO: OAUTH To start login
+        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
 
-        Intent groupListIntent = new Intent(this, GroupListActivity.class);
-        startActivity(groupListIntent);
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-//        Intent intent = TransactionListActivity.makeIntent(this, 1);
-//        startActivity(intent);
+        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent
+        if (requestCode == RC_SIGN_IN) {
+            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+
+            if (result.isSuccess()) {
+                // Signed in successfully, show authenticated UI.
+                GoogleSignInAccount acct = result.getSignInAccount();
+
+                User curUser = GoogleOAuthHelper.getUserFrom(acct);
+
+                // Send token to server and validate server-side
+                GoogleOAuthHelper.sendIdToken(curUser.getIdToken(), new LoginHandler() {
+                    @Override
+                    public void onLoginSuccess() {
+                        // Navigate to group activity
+                        Intent groupListIntent = new Intent(LoginActivity.this, GroupListActivity.class);
+                        startActivity(groupListIntent);
+                    }
+
+                    @Override
+                    public void onLoginFailed(String message) {
+                        Toast.makeText(LoginActivity.this, message, Toast.LENGTH_LONG).show();
+                    }
+                });
+
+                Log.w("GoogleSignIn", "Login success: " + acct);
+            } else {
+                Log.w("GoogleSignIn", "Login failure");
+
+                Toast.makeText(this, result.getStatus().getStatusMessage(), Toast.LENGTH_LONG).show();
+            }
+        }
     }
 }
 

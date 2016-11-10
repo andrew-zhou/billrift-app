@@ -1,5 +1,7 @@
 package com.BillRift.views;
 
+import com.google.android.gms.common.api.GoogleApiClient;
+
 public interface LoginView {
-    void finishLogin();
+    void startGoogleLogin(GoogleApiClient googleApiClient);
 }
