@@ -12,7 +12,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Server {
-    private static final String API_BASE_URL = "http://10.0.2.2:3000";
+    private static final String API_BASE_URL = "https://billrift.herokuapp.com";
 
     private static OkHttpClient.Builder httpClient = null;
 

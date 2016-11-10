@@ -32,7 +32,7 @@ public final class GoogleOAuthHelper {
         // Need to save the token at the first point it is accessible for encrypt/decrypt purposes
         TokenManager.saveToken(idToken);
 
-        User currentUser = new User(displayName, email, id, idToken);
+        User currentUser = new User(displayName, email, id);
         UserDatabase.getInstance().saveUser(currentUser);
 
         return currentUser;
