@@ -10,4 +10,5 @@ public interface TransactionListView {
     void showEmpty();
     void goToAddTransaction();
     void goToShowBalances();
+    void showAddGroupMemberDialog();
 }
