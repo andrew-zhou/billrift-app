@@ -48,26 +48,26 @@ public class GroupPresenter extends BasePresenter<Group, GroupView> {
                                 EventBus.getDefault().post(new GroupListMessageEvent(model.getId()));
                             } else {
                                 view().showProgressBar(false);
-                                view().showError();
+                                view().showError(response.message());
                             }
                         }
 
                         @Override
                         public void onFailure(Call<List<Transaction>> call, Throwable t) {
                             view().showProgressBar(false);
-                            view().showError();
+                            view().showError(t.getMessage());
                         }
                     });
                 } else {
                     view().showProgressBar(false);
-                    view().showError();
+                    view().showError(response.message());
                 }
             }
 
             @Override
             public void onFailure(Call<List<User>> call, Throwable t) {
                 view().showProgressBar(false);
-                view().showError();
+                view().showError(t.getMessage());
             }
         });
     }

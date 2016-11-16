@@ -52,6 +52,7 @@ public class TransactionListPresenter extends BasePresenter<List<Transaction>, T
                     setModel(response.body());
                 } else {
                     isLoaded = true;
+                    view().showError(response.message());
                     setModel(TransactionDatabase.getInstance().getTransactionsForGroup(groupId));
                 }
             }
@@ -59,6 +60,7 @@ public class TransactionListPresenter extends BasePresenter<List<Transaction>, T
             @Override
             public void onFailure(Call<List<Transaction>> call, Throwable t) {
                 isLoaded = true;
+                view().showError(t.getMessage());
                 setModel(TransactionDatabase.getInstance().getTransactionsForGroup(groupId));
             }
         });
@@ -80,10 +82,14 @@ public class TransactionListPresenter extends BasePresenter<List<Transaction>, T
         Call<ResponseBody> addMemberCall = Server.createService(GroupAPIRoutes.class).user(email);
         addMemberCall.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {}
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (!response.isSuccessful()) {
+                    view().showError(response.message());
+                }
+            }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {}
+            public void onFailure(Call<ResponseBody> call, Throwable t) { view().showError(t.getMessage()); }
         });
     }
 }

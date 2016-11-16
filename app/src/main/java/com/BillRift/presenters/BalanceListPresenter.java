@@ -34,6 +34,7 @@ public class BalanceListPresenter extends BasePresenter<List<Balance>, BalanceLi
                     setModel(response.body());
                 } else {
                     isLoaded = true;
+                    view().showError(response.message());
                     setModel(BalanceDatabase.getInstance().getBalancesForGroup(groupId));
                 }
             }
@@ -41,6 +42,7 @@ public class BalanceListPresenter extends BasePresenter<List<Balance>, BalanceLi
             @Override
             public void onFailure(Call<List<Balance>> call, Throwable t) {
                 isLoaded = true;
+                view().showError(t.getMessage());
                 setModel(BalanceDatabase.getInstance().getBalancesForGroup(groupId));
             }
         });

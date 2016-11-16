@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 import android.widget.ViewAnimator;
 
 import com.BillRift.models.Balance;
@@ -64,5 +65,10 @@ public class BalanceListFragment extends MvpFragment<BalanceListPresenter> imple
     public void showBalances(List<Balance> balanceList) {
         adapter.clearAndAddAll(balanceList);
         viewAnimator.setDisplayedChild(POSITION_LIST);
+    }
+
+    @Override
+    public void showError(String msg) {
+        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
     }
 }

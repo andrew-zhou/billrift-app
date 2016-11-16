@@ -71,26 +71,26 @@ public class GroupListPresenter extends BasePresenter<List<Group>, GroupListView
                                 updateView();
                             } else {
                                 view().showProgressBar(false);
-                                view().showError();
+                                view().showError(response.message());
                             }
                         }
 
                         @Override
                         public void onFailure(Call<List<Group>> call, Throwable t) {
                             view().showProgressBar(false);
-                            view().showError();
+                            view().showError(t.getMessage());
                         }
                     });
                 } else {
                     view().showProgressBar(false);
-                    view().showError();
+                    view().showError(response.message());
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 view().showProgressBar(false);
-                view().showError();
+                view().showError(t.getMessage());
             }
         });
     }

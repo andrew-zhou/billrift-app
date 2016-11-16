@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 import android.widget.ViewAnimator;
 
 import com.BillRift.models.Transaction;
@@ -102,6 +103,11 @@ public class TransactionListFragment extends MvpFragment<TransactionListPresente
     public void showTransactions(List<Transaction> transactionList) {
         adapter.clearAndAddAll(transactionList);
         viewAnimator.setDisplayedChild(POSITION_LIST);
+    }
+
+    @Override
+    public void showError(String msg) {
+        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
     }
 
     @Override

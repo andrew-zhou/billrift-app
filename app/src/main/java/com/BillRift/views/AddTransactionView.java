@@ -4,10 +4,6 @@ import com.BillRift.models.User;
 
 import java.util.List;
 
-/**
- * Created by Andrew on 11/8/2016.
- */
-
 public interface AddTransactionView {
     void showLoading();
     void showView(List<String> names);
@@ -17,5 +13,5 @@ public interface AddTransactionView {
     void setSelectedTo(String selectedName);
     void onSubmit();
     void onScan();
-    void showError();
+    void showError(String msg);
 }

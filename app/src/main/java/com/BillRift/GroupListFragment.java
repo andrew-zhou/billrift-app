@@ -127,8 +127,8 @@ public class GroupListFragment extends MvpFragment<GroupListPresenter> implement
     }
 
     @Override
-    public void showError() {
-        Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
+    public void showError(String msg) {
+        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
     }
 
     private void showProgressDialog() {

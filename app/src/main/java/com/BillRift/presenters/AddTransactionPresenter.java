@@ -35,7 +35,7 @@ public class AddTransactionPresenter extends BasePresenter<List<User>, AddTransa
                     isLoaded = true;
                     setModel(response.body());
                 } else {
-                    view().showError();
+                    view().showError(response.message());
                     isLoaded = true;
                     setModel(UserDatabase.getInstance().getUsersForGroup(groupId));
                 }
@@ -43,7 +43,7 @@ public class AddTransactionPresenter extends BasePresenter<List<User>, AddTransa
 
             @Override
             public void onFailure(Call<List<User>> call, Throwable t) {
-                view().showError();
+                view().showError(t.getMessage());
                 isLoaded = true;
                 setModel(UserDatabase.getInstance().getUsersForGroup(groupId));
             }
@@ -96,7 +96,7 @@ public class AddTransactionPresenter extends BasePresenter<List<User>, AddTransa
         Transaction transaction = new Transaction();
 
         if (selectedFrom.equals(selectedTo) || description.isEmpty()) {
-            view().showError();
+            view().showError("Invalid Input");
             return;
         }
 
@@ -119,7 +119,7 @@ public class AddTransactionPresenter extends BasePresenter<List<User>, AddTransa
             transaction.setGroupId(groupId);
             transaction.setTitle(description);
         } catch (Exception e) {
-            view().showError();
+            view().showError(e.getMessage());
             return;
         }
 
@@ -131,13 +131,13 @@ public class AddTransactionPresenter extends BasePresenter<List<User>, AddTransa
                 if (response.isSuccessful()) {
                     view().onSubmit();
                 } else {
-                    view().showError();
+                    view().showError(response.message());
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                view().showError();
+                view().showError(t.getMessage());
             }
         });
     }

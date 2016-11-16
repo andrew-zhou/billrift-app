@@ -11,4 +11,5 @@ public interface TransactionListView {
     void goToAddTransaction();
     void goToShowBalances();
     void showAddGroupMemberDialog();
+    void showError(String msg);
 }

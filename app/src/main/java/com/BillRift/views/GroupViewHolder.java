@@ -14,10 +14,6 @@ import com.BillRift.R;
 import com.BillRift.models.Group;
 import com.BillRift.presenters.GroupPresenter;
 
-/**
- * Created by Dweep on 2016-10-15.
- */
-
 public class GroupViewHolder extends MvpViewHolder<GroupPresenter> implements GroupView {
     private final TextView groupName;
     private final TextView personalBalance;
@@ -58,9 +54,9 @@ public class GroupViewHolder extends MvpViewHolder<GroupPresenter> implements Gr
     }
 
     @Override
-    public void showError() {
+    public void showError(String msg) {
         Context context = groupName.getContext();
-        Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
     }
 
     private void showProgressDialog(Context context) {
