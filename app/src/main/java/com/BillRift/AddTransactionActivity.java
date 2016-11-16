@@ -81,7 +81,7 @@ public class AddTransactionActivity extends FragmentActivity implements AddTrans
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == RECEIPT_REQUEST_CODE) {
+        if (requestCode == RECEIPT_REQUEST_CODE && data != null) {
             String content = data.getBundleExtra(SegmentScanActivity.EXTRAS_SCAN_RESULTS).getString(NAME_RECEIPT);
             fragment.handleScanResults(content);
         }
