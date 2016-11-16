@@ -106,7 +106,6 @@ public class TransactionListFragment extends MvpFragment<TransactionListPresente
 
     @Override
     public void goToAddTransaction() {
-        // TODO
         if (listener != null) {
             listener.goToAddTransactionActivity();
         }
@@ -114,7 +113,6 @@ public class TransactionListFragment extends MvpFragment<TransactionListPresente
 
     @Override
     public void goToShowBalances() {
-        // TODO
         if (listener != null) {
             listener.goToShowBalancesActivity();
         }
@@ -144,6 +142,10 @@ public class TransactionListFragment extends MvpFragment<TransactionListPresente
         });
 
         builder.show();
+    }
+
+    public void updateData() {
+        presenter.update();
     }
 
     public interface Listener {

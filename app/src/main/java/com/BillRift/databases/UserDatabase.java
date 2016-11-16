@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.BillRift.TokenManager;
+import com.BillRift.models.Group;
 import com.BillRift.models.User;
 import com.BillRift.security.CryptManager;
 
@@ -12,10 +13,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-/**
- * Created by Dweep on 2016-10-15.
- */
 
 public class UserDatabase {
     private static UserDatabase instance;
@@ -46,21 +43,17 @@ public class UserDatabase {
     }
 
     public List<User> getUsersForGroup(@NonNull Integer groupId) {
-        List<User> mockUsers = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            User u = new User("User " + Integer.toString(i), "", Integer.toString(i));
-            mockUsers.add(u);
+        synchronized(users) {
+            Group g = GroupDatabase.getInstance().getGroup(groupId);
+            if (g == null) {
+                return new ArrayList<>();
+            }
+            List<String> ids = g.getUserIds();
+            ArrayList<User> u = new ArrayList<>();
+            for(String id : ids) {
+                u.add(getUser(id));
+            }
+            return u;
         }
-        return mockUsers;
-
-        // TODO: Uncomment this when no longer mocking data
-//        synchronized(users) {
-//            List<String> ids = GroupDatabase.getInstance().getGroup(groupId).getUserIds();
-//            ArrayList<User> u = new ArrayList<>();
-//            for(String id : ids) {
-//                u.add(getUser(id));
-//            }
-//            return u;
-//        }
     }
 }

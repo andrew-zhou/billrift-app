@@ -11,10 +11,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by Yenny on 2016-10-15.
- */
-
 public class TransactionDatabase {
     private static TransactionDatabase instance;
     private final Map<Integer, String> transactions;
@@ -43,29 +39,16 @@ public class TransactionDatabase {
     }
 
     public List<Transaction> getTransactionsForGroup(Integer groupId) {
-        List<Transaction> list = new ArrayList<>();
-        for (int i = 1; i <= 21; i++) {
-            Transaction transaction = new Transaction();
-            transaction.setId(i);
-            transaction.setTitle("Test title: " + Integer.toString(i));
-            transaction.setAmount(i - 10.0);
-            transaction.setFrom("Test from: " + Integer.toString(i));
-            transaction.setTo("Test to: " + Integer.toString(i));
-            list.add(transaction);
+        synchronized (transactions) {
+            ArrayList<Transaction> transactionList = new ArrayList<>();
+            for (String transactionString : transactions.values()) {
+                Transaction transaction = (Transaction) CryptManager.decryptString(transactionString, TokenManager.getToken());
+                if (transaction.getGroupId() == groupId) {
+                    transactionList.add(transaction);
+                }
+            }
+            return transactionList;
         }
-        return list;
-
-        // TODO: Do not mock data and uncomment this section
-//        synchronized (transactions) {
-//            ArrayList<Transaction> transactionList = new ArrayList<>();
-//            for (String transactionString : transactions.values()) {
-//                Transaction transaction = (Transaction) CryptManager.decryptString(transactionString, TokenManager.getToken() /* TODO: Get token here */ );
-//                if (transaction.getGroupId() == groupId) {
-//                    transactionList.add(transaction);
-//                }
-//            }
-//            return transactionList;
-//        }
     }
 
 }

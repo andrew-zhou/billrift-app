@@ -1,5 +1,7 @@
 package com.BillRift.presenters;
 
+import com.BillRift.API.GroupAPIRoutes;
+import com.BillRift.API.Server;
 import com.BillRift.models.Transaction;
 import com.BillRift.views.AddTransactionView;
 import com.BillRift.databases.UserDatabase;
@@ -8,9 +10,10 @@ import com.BillRift.models.User;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Andrew on 11/8/2016.
- */
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class AddTransactionPresenter extends BasePresenter<List<User>, AddTransactionView> {
     private int groupId;
@@ -20,19 +23,31 @@ public class AddTransactionPresenter extends BasePresenter<List<User>, AddTransa
     private String description = "";
     private boolean isLoaded = false;
 
-    public AddTransactionPresenter(int groupId) {
+    public AddTransactionPresenter(final int groupId) {
         super();
         this.groupId = groupId;
         setModel(new ArrayList<User>());
-        // TODO: Make call to load users for group to database from server
-        // In the callback:
-        // transactionList = returnedValue;
-        // isLoaded = true;
-        // updateView();
+        Call<List<User>> usersForGroupCall = Server.createService(GroupAPIRoutes.class).users(groupId);
+        usersForGroupCall.enqueue(new Callback<List<User>>() {
+            @Override
+            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+                if (response.isSuccessful()) {
+                    isLoaded = true;
+                    setModel(response.body());
+                } else {
+                    view().showError();
+                    isLoaded = true;
+                    setModel(UserDatabase.getInstance().getUsersForGroup(groupId));
+                }
+            }
 
-        // For mocked purposes:
-        setModel(UserDatabase.getInstance().getUsersForGroup(groupId));
-        isLoaded = true;
+            @Override
+            public void onFailure(Call<List<User>> call, Throwable t) {
+                view().showError();
+                isLoaded = true;
+                setModel(UserDatabase.getInstance().getUsersForGroup(groupId));
+            }
+        });
     }
 
     @Override
@@ -109,8 +124,22 @@ public class AddTransactionPresenter extends BasePresenter<List<User>, AddTransa
         }
 
         // Need to send to server (and make the view loading)
+        Call<ResponseBody> transactionCall = Server.createService(GroupAPIRoutes.class).transaction(transaction);
+        transactionCall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    view().onSubmit();
+                } else {
+                    view().showError();
+                }
+            }
 
-        view().onSubmit();
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                view().showError();
+            }
+        });
     }
 
     public void scan() {

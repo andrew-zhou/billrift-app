@@ -1,5 +1,6 @@
 package com.BillRift;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -21,10 +22,6 @@ import com.BillRift.views.AddTransactionView;
 
 import java.util.ArrayList;
 import java.util.List;
-
-/**
- * Created by Andrew on 11/8/2016.
- */
 
 public class AddTransactionFragment extends MvpFragment<AddTransactionPresenter> implements AddTransactionView {
     public static final String GROUP_ID_KEY = "GROUP_ID_KEY";
@@ -54,7 +51,7 @@ public class AddTransactionFragment extends MvpFragment<AddTransactionPresenter>
         viewAnimator = (ViewAnimator) view.findViewById(R.id.animator);
 
         spinnerFrom = (Spinner)view.findViewById(R.id.from_dropdown);
-        spinnerAdapterFrom = new ArrayAdapter<CharSequence>(getActivity(), R.layout.support_simple_spinner_dropdown_item);
+        spinnerAdapterFrom = new ArrayAdapter<>(getActivity(), R.layout.support_simple_spinner_dropdown_item);
         spinnerFrom.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -67,7 +64,7 @@ public class AddTransactionFragment extends MvpFragment<AddTransactionPresenter>
         spinnerFrom.setAdapter(spinnerAdapterFrom);
 
         spinnerTo = (Spinner)view.findViewById(R.id.to_dropdown);
-        spinnerAdapterTo = new ArrayAdapter<CharSequence>(getActivity(), R.layout.support_simple_spinner_dropdown_item);
+        spinnerAdapterTo = new ArrayAdapter<>(getActivity(), R.layout.support_simple_spinner_dropdown_item);
         spinnerTo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -203,7 +200,7 @@ public class AddTransactionFragment extends MvpFragment<AddTransactionPresenter>
 
     @Override
     public void showError() {
-            Toast.makeText(getActivity(), "Invalid Input", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
     }
 
     public interface Listener {

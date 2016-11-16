@@ -12,15 +12,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by Andrew on 11/9/2016.
- */
-
 public class BalanceDatabase {
     private static BalanceDatabase instance;
     private final Map<String, String> balances;
 
-    public BalanceDatabase() {
+    private BalanceDatabase() {
         this.balances = new HashMap<>();
     }
 
@@ -45,24 +41,15 @@ public class BalanceDatabase {
     }
 
     public List<Balance> getBalancesForGroup(int groupId) {
-        // Mock data
-        List<Balance> list = new ArrayList<>();
-        for (int i = 1; i <= 5; i++) {
-            Balance Balance = new Balance(Integer.toString(i % 5), Integer.toString((i+1) % 5), i+10.0, 1);
-            list.add(Balance);
+        synchronized (balances) {
+            List<Balance> b = new ArrayList<>();
+            for (String s : balances.values()) {
+                Balance balance = (Balance) CryptManager.decryptString(s, TokenManager.getToken());
+                if (balance.getGroup() == groupId) {
+                    b.add(balance);
+                }
+            }
+            return b;
         }
-        return list;
-        
-        // TODO: Uncomment when no more mocking data
-//        synchronized (balances) {
-//            List<Balance> b = new ArrayList<>();
-//            for (String s : balances.values()) {
-//                Balance balance = (Balance) CryptManager.decryptString(s, TokenManager.getToken());
-//                if (balance.getGroup() == groupId) {
-//                    b.add(balance);
-//                }
-//            }
-//            return b;
-//        }
     }
 }

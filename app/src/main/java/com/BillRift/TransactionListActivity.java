@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 
 public class TransactionListActivity extends FragmentActivity implements TransactionListFragment.Listener {
     public static final String GROUP_ID_KEY = "GROUP_ID_KEY";
+    private static final int ADD_TRANSACTION_CODE = 100;
 
     private Integer groupId;
     private TransactionListFragment fragment;
@@ -42,11 +43,19 @@ public class TransactionListActivity extends FragmentActivity implements Transac
 
     @Override
     public void goToAddTransactionActivity() {
-        startActivity(AddTransactionActivity.makeIntent(this, groupId));
+        startActivityForResult(AddTransactionActivity.makeIntent(this, groupId), ADD_TRANSACTION_CODE);
     }
 
     @Override
     public void goToShowBalancesActivity() {
         startActivity(BalanceListActivity.makeIntent(this, groupId));
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ADD_TRANSACTION_CODE) {
+            fragment.updateData();
+        }
     }
 }

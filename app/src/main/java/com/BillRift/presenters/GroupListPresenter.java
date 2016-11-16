@@ -17,10 +17,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * Created by Dweep on 2016-10-15.
- */
-
 public class GroupListPresenter extends BasePresenter<List<Group>, GroupListView> {
     private boolean isLoadingData = false;
 
@@ -55,11 +51,6 @@ public class GroupListPresenter extends BasePresenter<List<Group>, GroupListView
     }
 
     public void addGroup(String groupName) {
-        // TODO: Make network call to create new group
-        // After creating new group, make a call to get groups from server if success
-        // After success to get groups from server refresh the database
-        // Then update view
-
         view().showProgressBar(true);
         final GroupsAPIRoutes groupsService = Server.createService(GroupsAPIRoutes.class);
         GroupAPIRoutes groupService = Server.createService(GroupAPIRoutes.class);

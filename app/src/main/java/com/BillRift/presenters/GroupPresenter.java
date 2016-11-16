@@ -3,6 +3,8 @@ package com.BillRift.presenters;
 import com.BillRift.API.GroupAPIRoutes;
 import com.BillRift.API.Server;
 import com.BillRift.GroupListMessageEvent;
+import com.BillRift.databases.TransactionDatabase;
+import com.BillRift.databases.UserDatabase;
 import com.BillRift.models.Group;
 import com.BillRift.models.Transaction;
 import com.BillRift.models.User;
@@ -15,10 +17,6 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-/**
- * Created by Dweep on 2016-10-15.
- */
 
 public class GroupPresenter extends BasePresenter<Group, GroupView> {
     @Override
@@ -35,11 +33,17 @@ public class GroupPresenter extends BasePresenter<Group, GroupView> {
             @Override
             public void onResponse(Call<List<User>> call, Response<List<User>> response) {
                 if (response.isSuccessful()) {
+                    for (User u : response.body()) {
+                        UserDatabase.getInstance().saveUser(u);
+                    }
                     Call<List<Transaction>> getTransactions= groupService.transactions(model.getId());
                     getTransactions.enqueue(new Callback<List<Transaction>>() {
                         @Override
                         public void onResponse(Call<List<Transaction>> call, Response<List<Transaction>> response) {
                             if (response.isSuccessful()) {
+                                for (Transaction t : response.body()) {
+                                    TransactionDatabase.getInstance().saveTransaction(t);
+                                }
                                 view().showProgressBar(false);
                                 EventBus.getDefault().post(new GroupListMessageEvent(model.getId()));
                             } else {
