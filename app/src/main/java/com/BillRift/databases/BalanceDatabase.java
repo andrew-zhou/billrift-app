@@ -45,7 +45,7 @@ public class BalanceDatabase {
             List<Balance> b = new ArrayList<>();
             for (String s : balances.values()) {
                 Balance balance = (Balance) CryptManager.decryptString(s, TokenManager.getToken());
-                if (balance.getGroup() == groupId) {
+                if (balance.getGroup().equals(groupId)) {
                     b.add(balance);
                 }
             }

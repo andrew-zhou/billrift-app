@@ -101,7 +101,7 @@ public class LoginActivity extends FragmentActivity implements LoginFragment.Lis
     private void showProgressDialog() {
         if (progressDialog == null) {
             progressDialog = new ProgressDialog(this);
-            progressDialog.setMessage(getString(R.string.loading));
+            progressDialog.setMessage(getString(R.string.authenticating));
             progressDialog.setIndeterminate(true);
         }
 

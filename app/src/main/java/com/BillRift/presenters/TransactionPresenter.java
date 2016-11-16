@@ -1,6 +1,10 @@
 package com.BillRift.presenters;
 
+import android.util.Log;
+
+import com.BillRift.databases.UserDatabase;
 import com.BillRift.models.Transaction;
+import com.BillRift.models.User;
 import com.BillRift.views.TransactionView;
 
 import java.text.NumberFormat;
@@ -13,7 +17,13 @@ public class TransactionPresenter extends BasePresenter<Transaction, Transaction
 
     @Override
     protected void updateView() {
-        view().setText(model.getFrom() + " paid " + NumberFormat.getCurrencyInstance().format(model.getAmount()) + " to " + model.getTo());
+        User from = UserDatabase.getInstance().getUser(model.getFrom());
+        User to = UserDatabase.getInstance().getUser(model.getTo());
+        if (from == null || to == null) {
+            Log.d("ERROR", "Null value for from or to");
+            return;
+        }
+        view().setText(model.getTitle() + ": " + from.getDisplayName() + " paid " + NumberFormat.getCurrencyInstance().format(model.getAmount()) + " to " + to.getDisplayName());
     }
 
 

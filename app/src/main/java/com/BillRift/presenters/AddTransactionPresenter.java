@@ -8,7 +8,9 @@ import com.BillRift.databases.UserDatabase;
 import com.BillRift.models.User;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -93,7 +95,7 @@ public class AddTransactionPresenter extends BasePresenter<List<User>, AddTransa
 
     public void submit() {
         // Create transaction
-        Transaction transaction = new Transaction();
+        Map<String, String> transactionObj = new HashMap<>();
 
         if (selectedFrom.equals(selectedTo) || description.isEmpty()) {
             view().showError("Invalid Input");
@@ -112,19 +114,18 @@ public class AddTransactionPresenter extends BasePresenter<List<User>, AddTransa
         }
 
         try {
-            double amnt = Double.parseDouble(amount);
-            transaction.setAmount(amnt);
-            transaction.setFrom(fromId);
-            transaction.setTo(toId);
-            transaction.setGroupId(groupId);
-            transaction.setTitle(description);
+            Double.parseDouble(amount); // For type-checking purposes
+            transactionObj.put("amount", amount);
+            transactionObj.put("userFromId", fromId);
+            transactionObj.put("userToId", toId);
+            transactionObj.put("title", description);
         } catch (Exception e) {
             view().showError(e.getMessage());
             return;
         }
 
         // Need to send to server (and make the view loading)
-        Call<ResponseBody> transactionCall = Server.createService(GroupAPIRoutes.class).transaction(transaction);
+        Call<ResponseBody> transactionCall = Server.createService(GroupAPIRoutes.class).transaction(groupId, transactionObj);
         transactionCall.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

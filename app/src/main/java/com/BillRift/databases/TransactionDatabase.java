@@ -43,7 +43,7 @@ public class TransactionDatabase {
             ArrayList<Transaction> transactionList = new ArrayList<>();
             for (String transactionString : transactions.values()) {
                 Transaction transaction = (Transaction) CryptManager.decryptString(transactionString, TokenManager.getToken());
-                if (transaction.getGroupId() == groupId) {
+                if (transaction.getGroupId().equals(groupId)) {
                     transactionList.add(transaction);
                 }
             }

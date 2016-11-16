@@ -18,7 +18,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class GroupListPresenter extends BasePresenter<List<Group>, GroupListView> {
-    private boolean isLoadingData = false;
+//    private boolean isLoadingData = false;
 
     @Override
     protected void updateView() {
@@ -34,16 +34,32 @@ public class GroupListPresenter extends BasePresenter<List<Group>, GroupListView
     public void bindView(@NonNull GroupListView view) {
         super.bindView(view);
 
-        // Let's not reload data if it's already here
-        if (model == null && !isLoadingData) {
-            view().showLoading();
-            loadData();
-        }
+        loadData();
     }
 
     private void loadData() {
-        isLoadingData = true;
-        setModel(GroupDatabase.getInstance().getAllGroups());
+        view().showLoading();
+        Call<List<Group>> groupsCall = Server.createService(GroupsAPIRoutes.class).groups();
+        groupsCall.enqueue(new Callback<List<Group>>() {
+            @Override
+            public void onResponse(Call<List<Group>> call, Response<List<Group>> response) {
+                if (response.isSuccessful()) {
+                    for (Group g : response.body()) {
+                        GroupDatabase.getInstance().saveGroup(g);
+                    }
+                    setModel(GroupDatabase.getInstance().getAllGroups());
+                } else {
+                    view().showError(response.message());
+                    setModel(GroupDatabase.getInstance().getAllGroups());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Group>> call, Throwable t) {
+                view().showError(t.getMessage());
+                setModel(GroupDatabase.getInstance().getAllGroups());
+            }
+        });
     }
 
     public void onAddGroupClicked() {
@@ -68,7 +84,7 @@ public class GroupListPresenter extends BasePresenter<List<Group>, GroupListView
                                     GroupDatabase.getInstance().saveGroup(g);
                                 }
                                 view().showProgressBar(false);
-                                updateView();
+                                setModel(GroupDatabase.getInstance().getAllGroups());
                             } else {
                                 view().showProgressBar(false);
                                 view().showError(response.message());

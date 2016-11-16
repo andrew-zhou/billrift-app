@@ -23,6 +23,7 @@ public class BalancePresenter extends BasePresenter<Balance, BalanceView> {
             Log.d("ERROR", "Null value for from or to");
             return;
         }
-        view().setText(from.getDisplayName() + " owes " + to.getDisplayName() + " a total of " + NumberFormat.getCurrencyInstance().format(model.getAmount()));
+        view().setText(from.getDisplayName() + " owes " + to.getDisplayName() + " a total of " +
+                NumberFormat.getCurrencyInstance().format(model.getAmount()));
     }
 }
