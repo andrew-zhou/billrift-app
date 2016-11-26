@@ -146,4 +146,8 @@ public class AddTransactionPresenter extends BasePresenter<List<User>, AddTransa
     public void scan() {
         view().onScan();
     }
+
+    public void setLoaded(boolean isLoaded) {
+        this.isLoaded = isLoaded;
+    }
 }
