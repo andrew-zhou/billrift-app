@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,13 +19,10 @@ import android.widget.ViewAnimator;
 
 import com.BillRift.models.Group;
 import com.BillRift.presenters.GroupListPresenter;
+import com.BillRift.timing.MethodTimer;
 import com.BillRift.views.GroupListView;
 
 import java.util.List;
-
-/**
- * Created by Dweep on 2016-10-15.
- */
 
 public class GroupListFragment extends MvpFragment<GroupListPresenter> implements GroupListView {
     private static final int POSITION_LIST = 0;
@@ -35,16 +33,20 @@ public class GroupListFragment extends MvpFragment<GroupListPresenter> implement
     private GroupAdapter adapter;
     private Button addGroupButton;
     private ProgressDialog progressDialog;
+    private MethodTimer timer;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_grouplist, container, false);
 
+        timer = new MethodTimer();
+
         addGroupButton = (Button) view.findViewById(R.id.btn_add_group);
         addGroupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                timer = new MethodTimer();
                 presenter.onAddGroupClicked();
             }
         });
@@ -77,22 +79,46 @@ public class GroupListFragment extends MvpFragment<GroupListPresenter> implement
 
     @Override
     public void showGroups(List<Group> groups) {
+        if (timer != null) {
+            if (!timer.durationWithinLimit(1)) {
+                Log.e("TIMING ISSUE", "Took more than 1 second for responsive UI");
+            }
+            timer = null;
+        }
         adapter.clearAndAddAll(groups);
         animator.setDisplayedChild(POSITION_LIST);
     }
 
     @Override
     public void showLoading() {
+        if (timer != null) {
+            if (!timer.durationWithinLimit(1)) {
+                Log.e("TIMING ISSUE", "Took more than 1 second for responsive UI");
+            }
+            timer = null;
+        }
         animator.setDisplayedChild(POSITION_LOADING);
     }
 
     @Override
     public void showEmpty() {
+        if (timer != null) {
+            if (!timer.durationWithinLimit(1)) {
+                Log.e("TIMING ISSUE", "Took more than 1 second for responsive UI");
+            }
+            timer = null;
+        }
         animator.setDisplayedChild(POSITION_EMPTY);
     }
 
     @Override
     public void showAddGroupDialog() {
+        if (timer != null) {
+            if (!timer.durationWithinLimit(1)) {
+                Log.e("TIMING ISSUE", "Took more than 1 second for responsive UI");
+            }
+            timer = null;
+        }
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Enter New Group Name");
 
@@ -119,6 +145,12 @@ public class GroupListFragment extends MvpFragment<GroupListPresenter> implement
 
     @Override
     public void showProgressBar(boolean show) {
+        if (timer != null) {
+            if (!timer.durationWithinLimit(1)) {
+                Log.e("TIMING ISSUE", "Took more than 1 second for responsive UI");
+            }
+            timer = null;
+        }
         if (show) {
             showProgressDialog();
         } else {
@@ -128,6 +160,12 @@ public class GroupListFragment extends MvpFragment<GroupListPresenter> implement
 
     @Override
     public void showError(String msg) {
+        if (timer != null) {
+            if (!timer.durationWithinLimit(1)) {
+                Log.e("TIMING ISSUE", "Took more than 1 second for responsive UI");
+            }
+            timer = null;
+        }
         Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
     }
 

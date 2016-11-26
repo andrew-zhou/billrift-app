@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 import android.widget.ViewAnimator;
 
 import com.BillRift.presenters.AddTransactionPresenter;
+import com.BillRift.timing.MethodTimer;
 import com.BillRift.views.AddTransactionView;
 
 import java.util.ArrayList;
@@ -37,6 +39,7 @@ public class AddTransactionFragment extends MvpFragment<AddTransactionPresenter>
     private Button scanBtn;
     private List<String> names;
     private Listener listener;
+    private MethodTimer timer;
 
     @Override
     protected AddTransactionPresenter createPresenter() {
@@ -108,6 +111,7 @@ public class AddTransactionFragment extends MvpFragment<AddTransactionPresenter>
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                timer = new MethodTimer();
                 presenter.submit();
             }
         });
@@ -182,6 +186,12 @@ public class AddTransactionFragment extends MvpFragment<AddTransactionPresenter>
 
     @Override
     public void onSubmit() {
+        if (timer != null) {
+            if (!timer.durationWithinLimit(1)) {
+                Log.e("TIMING ISSUE", "Took more than 1 second for responsive UI");
+            }
+            timer = null;
+        }
         if (listener != null) {
             listener.finishSubmission();
         }
@@ -200,7 +210,13 @@ public class AddTransactionFragment extends MvpFragment<AddTransactionPresenter>
 
     @Override
     public void showError(String msg) {
-            Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+        if (timer != null) {
+            if (!timer.durationWithinLimit(1)) {
+                Log.e("TIMING ISSUE", "Took more than 1 second for responsive UI");
+            }
+            timer = null;
+        }
+        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
     }
 
     public interface Listener {

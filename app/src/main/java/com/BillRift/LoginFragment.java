@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.BillRift.models.User;
 import com.BillRift.presenters.LoginPresenter;
+import com.BillRift.timing.MethodTimer;
 import com.BillRift.views.LoginView;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -23,6 +24,7 @@ public class LoginFragment extends MvpFragment<LoginPresenter> implements LoginV
 
     private Listener listener;
     private SignInButton signInButton;
+    private MethodTimer timer;
 
     @Nullable
     @Override
@@ -55,6 +57,7 @@ public class LoginFragment extends MvpFragment<LoginPresenter> implements LoginV
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                timer = new MethodTimer();
                 presenter.onLoginButtonClicked();
             }
         });
@@ -80,6 +83,12 @@ public class LoginFragment extends MvpFragment<LoginPresenter> implements LoginV
 
     @Override
     public void startGoogleLogin(GoogleApiClient googleApiClient) {
+        if (timer != null) {
+            if (!timer.durationWithinLimit(1)) {
+                Log.e("TIMING ISSUE", "Took more than 1 second for responsive UI");
+            }
+            timer = null;
+        }
         if(listener != null) {
             listener.goToGoogleLogin(googleApiClient);
         }

@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import android.widget.ViewAnimator;
 
 import com.BillRift.models.Transaction;
 import com.BillRift.presenters.TransactionListPresenter;
+import com.BillRift.timing.MethodTimer;
 import com.BillRift.views.TransactionListView;
 
 import java.util.List;
@@ -34,11 +36,14 @@ public class TransactionListFragment extends MvpFragment<TransactionListPresente
     private Button addGroupMember;
     private ViewAnimator viewAnimator;
     private TransactionAdapter adapter;
+    private MethodTimer timer;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_transaction_list, container, false);
+
+        timer = new MethodTimer();
 
         showBalances = (Button)view.findViewById(R.id.btn_balances);
         showBalances.setOnClickListener(new View.OnClickListener() {
@@ -58,6 +63,7 @@ public class TransactionListFragment extends MvpFragment<TransactionListPresente
         addGroupMember.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                timer = new MethodTimer();
                 presenter.addGroupMemberButtonClicked();
             }
         });
@@ -91,27 +97,57 @@ public class TransactionListFragment extends MvpFragment<TransactionListPresente
 
     @Override
     public void showEmpty() {
+        if (timer != null) {
+            if (!timer.durationWithinLimit(1)) {
+                Log.e("TIMING ISSUE", "Took more than 1 second for responsive UI");
+            }
+            timer = null;
+        }
         viewAnimator.setDisplayedChild(POSITION_EMPTY);
     }
 
     @Override
     public void showLoading() {
+        if (timer != null) {
+            if (!timer.durationWithinLimit(1)) {
+                Log.e("TIMING ISSUE", "Took more than 1 second for responsive UI");
+            }
+            timer = null;
+        }
         viewAnimator.setDisplayedChild(POSITION_LOADING);
     }
 
     @Override
     public void showTransactions(List<Transaction> transactionList) {
+        if (timer != null) {
+            if (!timer.durationWithinLimit(1)) {
+                Log.e("TIMING ISSUE", "Took more than 1 second for responsive UI");
+            }
+            timer = null;
+        }
         adapter.clearAndAddAll(transactionList);
         viewAnimator.setDisplayedChild(POSITION_LIST);
     }
 
     @Override
     public void showError(String msg) {
+        if (timer != null) {
+            if (!timer.durationWithinLimit(1)) {
+                Log.e("TIMING ISSUE", "Took more than 1 second for responsive UI");
+            }
+            timer = null;
+        }
         Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void goToAddTransaction() {
+        if (timer != null) {
+            if (!timer.durationWithinLimit(1)) {
+                Log.e("TIMING ISSUE", "Took more than 1 second for responsive UI");
+            }
+            timer = null;
+        }
         if (listener != null) {
             listener.goToAddTransactionActivity();
         }
@@ -119,6 +155,12 @@ public class TransactionListFragment extends MvpFragment<TransactionListPresente
 
     @Override
     public void goToShowBalances() {
+        if (timer != null) {
+            if (!timer.durationWithinLimit(1)) {
+                Log.e("TIMING ISSUE", "Took more than 1 second for responsive UI");
+            }
+            timer = null;
+        }
         if (listener != null) {
             listener.goToShowBalancesActivity();
         }
@@ -146,6 +188,13 @@ public class TransactionListFragment extends MvpFragment<TransactionListPresente
                 dialogInterface.cancel();
             }
         });
+
+        if (timer != null) {
+            if (!timer.durationWithinLimit(1)) {
+                Log.e("TIMING ISSUE", "Took more than 1 second for responsive UI");
+            }
+            timer = null;
+        }
 
         builder.show();
     }

@@ -6,10 +6,6 @@ import android.widget.TextView;
 import com.BillRift.presenters.TransactionPresenter;
 import com.BillRift.views.TransactionView;
 
-/**
- * Created by Yenny on 2016-10-15.
- */
-
 public class TransactionViewHolder extends MvpViewHolder<TransactionPresenter> implements TransactionView {
     private TextView transactionTextView;
 

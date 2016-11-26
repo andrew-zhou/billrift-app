@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.ViewAnimator;
 
 import com.BillRift.models.Balance;
 import com.BillRift.presenters.BalanceListPresenter;
+import com.BillRift.timing.MethodTimer;
 import com.BillRift.views.BalanceListView;
 
 import java.util.List;
@@ -30,6 +32,7 @@ public class BalanceListFragment extends MvpFragment<BalanceListPresenter> imple
 
     private ViewAnimator viewAnimator;
     private BalanceAdapter adapter;
+    private MethodTimer timer;
 
     @Override
     protected BalanceListPresenter createPresenter() {
@@ -40,6 +43,8 @@ public class BalanceListFragment extends MvpFragment<BalanceListPresenter> imple
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_balance_list, container, false);
+
+        timer = new MethodTimer();
 
         viewAnimator = (ViewAnimator)view.findViewById(R.id.animator);
         RecyclerView recyclerView = (RecyclerView)viewAnimator.getChildAt(POSITION_LIST);
@@ -53,22 +58,46 @@ public class BalanceListFragment extends MvpFragment<BalanceListPresenter> imple
 
     @Override
     public void showEmpty() {
+        if (timer != null) {
+            if (!timer.durationWithinLimit(1)) {
+                Log.e("TIMING ISSUE", "Took more than 1 second for responsive UI");
+            }
+            timer = null;
+        }
         viewAnimator.setDisplayedChild(POSITION_EMPTY);
     }
 
     @Override
     public void showLoading() {
+        if (timer != null) {
+            if (!timer.durationWithinLimit(1)) {
+                Log.e("TIMING ISSUE", "Took more than 1 second for responsive UI");
+            }
+            timer = null;
+        }
         viewAnimator.setDisplayedChild(POSITION_LOADING);
     }
 
     @Override
     public void showBalances(List<Balance> balanceList) {
+        if (timer != null) {
+            if (!timer.durationWithinLimit(1)) {
+                Log.e("TIMING ISSUE", "Took more than 1 second for responsive UI");
+            }
+            timer = null;
+        }
         adapter.clearAndAddAll(balanceList);
         viewAnimator.setDisplayedChild(POSITION_LIST);
     }
 
     @Override
     public void showError(String msg) {
+        if (timer != null) {
+            if (!timer.durationWithinLimit(1)) {
+                Log.e("TIMING ISSUE", "Took more than 1 second for responsive UI");
+            }
+            timer = null;
+        }
         Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
     }
 }
