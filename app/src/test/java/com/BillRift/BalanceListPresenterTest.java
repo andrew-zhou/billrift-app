@@ -4,9 +4,10 @@ import android.util.Log;
 
 import com.BillRift.API.GroupAPIRoutes;
 import com.BillRift.API.Server;
+import com.BillRift.models.Balance;
 import com.BillRift.models.User;
-import com.BillRift.presenters.AddTransactionPresenter;
-import com.BillRift.views.AddTransactionView;
+import com.BillRift.presenters.BalanceListPresenter;
+import com.BillRift.views.BalanceListView;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -23,7 +24,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 
 import static org.mockito.Matchers.anyList;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
@@ -35,51 +35,49 @@ import static org.powermock.api.mockito.PowerMockito.when;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({Log.class, Server.class})
-public class AddTransactionPresenterTest {
-    private AddTransactionPresenter presenter;
-    private AddTransactionView view;
+public class BalanceListPresenterTest {
+    private BalanceListPresenter presenter;
+    private BalanceListView view;
 
     @Before
     public void setUp() {
         mockStatic(Server.class);
         GroupAPIRoutes fakeAPIRoutes = Mockito.mock(GroupAPIRoutes.class);
-        Call<List<User>> fakeCall = (Call<List<User>>) Mockito.mock(Call.class);
-        Mockito.doNothing().when(fakeCall).enqueue(Matchers.<Callback<List<User>>>any());
-        Mockito.when(fakeAPIRoutes.users(1)).thenReturn(fakeCall);
+        Call<List<Balance>> fakeCall = (Call<List<Balance>>) Mockito.mock(Call.class);
+        Mockito.doNothing().when(fakeCall).enqueue(Matchers.<Callback<List<Balance>>>any());
+        Mockito.when(fakeAPIRoutes.balances(1)).thenReturn(fakeCall);
         when(Server.createService(GroupAPIRoutes.class)).thenReturn(fakeAPIRoutes);
 
-        presenter = new AddTransactionPresenter(1);
-        view = Mockito.mock(AddTransactionView.class);
+        presenter = new BalanceListPresenter(1);
+        view = Mockito.mock(BalanceListView.class);
         mockStatic(Log.class);
         presenter.bindView(view);
     }
 
     @Test
-    public void testUpdateView_emptyModel_showsLoading() {
+    public void testUpdateView_notLoadedEmptyModel_showLoading() {
         verify(view).showLoading();
-        verify(view, never()).showView(anyList());
+        verify(view, never()).showBalances(anyList());
     }
 
     @Test
-    public void testUpdateView_withModel_setsView() {
-        List<User> users = new ArrayList<>();
-        users.add(new User("Fake", "Fake", "1"));
-        users.add(new User("Fake", "Fake", "2"));
+    public void testUpdateView_loadedEmptyModel_showsEmpty() {
+        presenter.setLoaded(true);
+        presenter.setModel(new ArrayList<Balance>());
+
+        verify(view).showEmpty();
+        verify(view, never()).showBalances(anyList());
+    }
+
+    @Test
+    public void testUpdateView_withBalances_showsBalances() {
+        Balance b = new Balance();
+        List<Balance> fakeModel = new ArrayList<>();
+        fakeModel.add(b);
 
         presenter.setLoaded(true);
-        presenter.setModel(users);
+        presenter.setModel(fakeModel);
 
-        verify(view).showView(anyList());
-        verify(view).setSelectedFrom(anyString());
-        verify(view).setSelectedTo(anyString());
-        verify(view).setAmount(anyString());
-        verify(view).setDescription(anyString());
-    }
-
-    @Test
-    public void testScan() {
-        presenter.scan();
-
-        verify(view).onScan();
+        verify(view).showBalances(fakeModel);
     }
 }

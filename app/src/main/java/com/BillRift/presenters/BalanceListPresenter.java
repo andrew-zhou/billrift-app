@@ -60,4 +60,8 @@ public class BalanceListPresenter extends BasePresenter<List<Balance>, BalanceLi
             }
         }
     }
+
+    public void setLoaded(boolean isLoaded) {
+        this.isLoaded = isLoaded;
+    }
 }
