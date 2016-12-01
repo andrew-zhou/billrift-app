@@ -1,3 +1,9 @@
+/*
+    GroupListActivity.java
+    UI Layer Component
+    Reference Number: 1
+ */
+
 package com.BillRift;
 
 import android.content.Intent;
@@ -6,10 +12,6 @@ import android.support.v4.app.FragmentActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-
-/**
- * Created by Dweep on 2016-10-15.
- */
 
 public class GroupListActivity extends FragmentActivity {
     @Override

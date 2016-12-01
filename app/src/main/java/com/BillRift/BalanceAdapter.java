@@ -1,3 +1,9 @@
+/*
+    BalanceAdapter.java
+    UI Layer Component
+    Reference Number: 1
+ */
+
 package com.BillRift;
 
 import android.support.annotation.NonNull;
@@ -6,10 +12,6 @@ import android.view.ViewGroup;
 
 import com.BillRift.models.Balance;
 import com.BillRift.presenters.BalancePresenter;
-
-/**
- * Created by Andrew on 11/9/2016.
- */
 
 public class BalanceAdapter extends MvpRecyclerListAdapter<Balance, BalancePresenter, BalanceViewHolder> {
     @Override

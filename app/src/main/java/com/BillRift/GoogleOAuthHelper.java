@@ -1,3 +1,9 @@
+/*
+    GoogleOAuthHelper.java
+    Authenticator Component
+    Reference Number: 6
+ */
+
 package com.BillRift;
 
 import android.util.Log;
@@ -15,10 +21,6 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-/**
- * Created by Dweep on 2016-11-09.
- */
 
 public final class GoogleOAuthHelper {
     private GoogleOAuthHelper() { }

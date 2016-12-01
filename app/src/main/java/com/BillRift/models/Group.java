@@ -1,8 +1,10 @@
-package com.BillRift.models;
-
-/**
- * Created by Zal on 2016-10-15.
+/*
+    Group.java
+    Group Database Component
+    Reference Number: 13
  */
+
+package com.BillRift.models;
 
 import com.google.gson.annotations.SerializedName;
 

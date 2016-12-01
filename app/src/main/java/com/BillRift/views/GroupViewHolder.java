@@ -1,3 +1,9 @@
+/*
+    GroupViewHolder.java
+    UI Layer Component
+    Reference Number: 1
+ */
+
 package com.BillRift.views;
 
 import android.app.ProgressDialog;

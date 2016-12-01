@@ -1,3 +1,9 @@
+/*
+    CryptManager.java
+    Cryptography Manager Component
+    Reference Number: 9
+ */
+
 package com.BillRift.security;
 
 import android.util.Log;
@@ -5,10 +11,6 @@ import android.util.Log;
 import com.scottyab.aescrypt.AESCrypt;
 
 import java.security.GeneralSecurityException;
-
-/**
- * Created by Andrew on 11/9/2016.
- */
 
 public class CryptManager {
     public static String encryptObject(Object o, String token) {

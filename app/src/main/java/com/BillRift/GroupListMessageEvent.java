@@ -1,8 +1,10 @@
-package com.BillRift;
-
-/**
- * Created by Dweep on 2016-10-15.
+/*
+    GroupListMessageEvent.java
+    UI Layer Component
+    Reference Number: 1
  */
+
+package com.BillRift;
 
 public class GroupListMessageEvent {
     private int groupId;

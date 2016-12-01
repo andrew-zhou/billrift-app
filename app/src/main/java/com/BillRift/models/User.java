@@ -1,12 +1,14 @@
+/*
+    User.java
+    User Database Component
+    Reference Number: 12
+ */
+
 package com.BillRift.models;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-
-/**
- * Created by Zal on 2016-10-15.
- */
 
 public class User implements Serializable {
     @SerializedName("name")

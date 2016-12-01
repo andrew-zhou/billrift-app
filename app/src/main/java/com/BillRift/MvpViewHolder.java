@@ -1,3 +1,9 @@
+/*
+    MvpViewHolder.java
+    UI Layer Component
+    Reference Number: 1
+ */
+
 package com.BillRift;
 
 import android.support.v7.widget.RecyclerView;

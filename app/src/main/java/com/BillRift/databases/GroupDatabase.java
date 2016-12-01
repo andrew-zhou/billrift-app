@@ -1,3 +1,9 @@
+/*
+    GroupDatabase.java
+    Group Database Component
+    Reference Number: 13
+ */
+
 package com.BillRift.databases;
 
 import android.support.annotation.NonNull;
@@ -11,10 +17,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-/**
- * Created by Dweep on 2016-10-15.
- */
 
 public class GroupDatabase {
     private static GroupDatabase instance;

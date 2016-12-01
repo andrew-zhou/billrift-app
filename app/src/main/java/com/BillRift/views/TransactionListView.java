@@ -1,3 +1,9 @@
+/*
+    TransactionListView.java
+    UI Layer Component
+    Reference Number: 1
+ */
+
 package com.BillRift.views;
 
 import com.BillRift.models.Transaction;

@@ -1,3 +1,9 @@
+/*
+    MethodTimer.java
+    Method Timing Service Component
+    Reference Number: 2
+ */
+
 package com.BillRift.timing;
 
 import java.util.concurrent.TimeUnit;

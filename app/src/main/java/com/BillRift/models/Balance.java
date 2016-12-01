@@ -1,12 +1,14 @@
+/*
+    Balance.java
+    Balance Database Component
+    Reference Number: 15
+ */
+
 package com.BillRift.models;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-
-/**
- * Created by Andrew on 11/9/2016.
- */
 
 public class Balance implements Serializable {
     @SerializedName("from")

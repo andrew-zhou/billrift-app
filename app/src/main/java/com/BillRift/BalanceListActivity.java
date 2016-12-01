@@ -1,3 +1,9 @@
+/*
+    BalanceListActivity.java
+    UI Layer Component
+    Reference Number: 1
+ */
+
 package com.BillRift;
 
 import android.content.Context;
@@ -5,10 +11,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.widget.LinearLayout;
-
-/**
- * Created by Andrew on 11/9/2016.
- */
 
 public class BalanceListActivity extends FragmentActivity {
     public static final String GROUP_ID_KEY = "GROUP_ID_KEY";

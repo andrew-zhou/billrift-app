@@ -1,3 +1,9 @@
+/*
+    BalanceDatabase.java
+    Balance Database Component
+    Reference Number: 15
+ */
+
 package com.BillRift.databases;
 
 import android.support.annotation.NonNull;

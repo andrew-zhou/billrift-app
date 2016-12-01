@@ -1,3 +1,9 @@
+/*
+    BalanceViewHolder.java
+    UI Layer Component
+    Reference Number: 1
+ */
+
 package com.BillRift;
 
 import android.view.View;
@@ -5,10 +11,6 @@ import android.widget.TextView;
 
 import com.BillRift.presenters.BalancePresenter;
 import com.BillRift.views.BalanceView;
-
-/**
- * Created by Andrew on 11/9/2016.
- */
 
 public class BalanceViewHolder extends MvpViewHolder<BalancePresenter> implements BalanceView {
     private TextView balTV;

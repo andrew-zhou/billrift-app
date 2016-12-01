@@ -1,3 +1,9 @@
+/*
+    PresenterManager.java
+    Business Logic Layer Component
+    Reference Number: 8
+ */
+
 package com.BillRift;
 
 import android.os.Bundle;

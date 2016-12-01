@@ -1,8 +1,10 @@
-package com.BillRift;
-
-/**
- * Created by Andrew on 11/9/2016.
+/*
+    TokenManager.java
+    Auth Token Manager Component
+    Reference Number: 5
  */
+
+package com.BillRift;
 
 public class TokenManager {
     private static String token = null;

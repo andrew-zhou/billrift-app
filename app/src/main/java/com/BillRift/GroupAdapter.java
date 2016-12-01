@@ -1,3 +1,9 @@
+/*
+    GroupAdapter.java
+    UI Layer Component
+    Reference Number: 1
+ */
+
 package com.BillRift;
 
 import android.support.annotation.NonNull;
@@ -8,9 +14,6 @@ import com.BillRift.models.Group;
 import com.BillRift.presenters.GroupPresenter;
 import com.BillRift.views.GroupViewHolder;
 
-/**
- * Created by Dweep on 2016-10-15.
- */
 
 public class GroupAdapter extends MvpRecyclerListAdapter<Group, GroupPresenter, GroupViewHolder> {
     @Override

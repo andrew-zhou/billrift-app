@@ -1,12 +1,14 @@
+/*
+    Transaction.java
+    Transaction Database Component
+    Reference Number: 14
+ */
+
 package com.BillRift.models;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-
-/**
- * Created by Zal on 2016-10-15.
- */
 
 public class Transaction implements Serializable {
     @SerializedName("userFromId")

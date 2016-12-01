@@ -1,6 +1,11 @@
+/*
+    Serializer.java
+    Business Logic Layer Component
+    Reference Number: 10
+ */
+
 package com.BillRift.security;
 
-import android.util.Base64;
 import android.util.Log;
 
 import java.io.ByteArrayInputStream;
